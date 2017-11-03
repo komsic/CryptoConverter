@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter;
+package com.example.komsic.cryptoconverter.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.komsic.cryptoconverter.R;
 
 public class MainActivity extends AppCompatActivity {
 
