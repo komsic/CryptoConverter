@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">CryptoConverter</string>
     <string name="action_settings">Settings</string>
+    <string-array name="currency_to_be_converted">
+        <item>BTC</item>
+        <item>ETH</item>
+        <item>NGN</item>
+    </string-array>
 </resources>
