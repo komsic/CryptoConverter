@@ -17,13 +17,13 @@ import java.util.ArrayList;
  * Created by komsic on 11/4/2017.
  */
 
-public class CurrencyConvertionAdapter extends RecyclerView.Adapter<CurrencyConvertionAdapter
+public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter
         .CardViewHolder>{
 
     private ArrayList<Currency> mList = new ArrayList<>();
     private Context mContext;
 
-    public CurrencyConvertionAdapter(Context context) {
+    public CurrencyConversionAdapter(Context context) {
         mContext = context;
     }
 
@@ -50,7 +50,7 @@ public class CurrencyConvertionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CurrencyConvertionAdapter.class);
+                Intent intent = new Intent(mContext, CurrencyConversionAdapter.class);
                 intent.putExtra("currencyName", currencyName);
                 intent.putExtra("btcToCurrentCurrencyRate", btcToCurrentCurrencyRate);
                 intent.putExtra("ethToCurrentCurrencyRate", ethToCurrentCurrencyRate);
@@ -63,6 +63,11 @@ public class CurrencyConvertionAdapter extends RecyclerView.Adapter<CurrencyConv
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    public void addItem(Currency currency){
+        mList.add(currency);
+        notifyItemInserted(mList.size() - 1);
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder{
