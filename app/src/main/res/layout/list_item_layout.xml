@@ -39,6 +39,7 @@
                 android:src="@drawable/ic_compare_arrow"/>
 
             <TextView
+                android:id="@+id/btc_to_current_currency_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="NGN"
@@ -54,6 +55,7 @@
                 android:src="@drawable/ic_arrow_forward"/>
 
             <TextView
+                android:id="@+id/btc_to_current_currency_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="1500000"
@@ -85,6 +87,7 @@
                 android:src="@drawable/ic_compare_arrow"/>
 
             <TextView
+                android:id="@+id/eth_to_current_currency_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="NGN"
@@ -100,6 +103,7 @@
                 android:src="@drawable/ic_arrow_forward"/>
 
             <TextView
+                android:id="@+id/eth_to_current_currency_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="500000"
