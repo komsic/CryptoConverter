@@ -38,6 +38,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
+        Currency.CurrencyType.onChangeRatesValue();
         Currency currency = mList.get(position);
 
         final String currencyName = currency.getCType().name();

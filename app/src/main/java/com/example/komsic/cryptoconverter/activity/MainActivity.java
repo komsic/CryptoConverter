@@ -15,15 +15,13 @@ import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.adapter.CurrencyConversionAdapter;
+import com.example.komsic.cryptoconverter.helper.DialogNewCard;
 import com.example.komsic.cryptoconverter.model.Currency;
 import com.example.komsic.cryptoconverter.model.CurrencyRate;
 import com.example.komsic.cryptoconverter.model.ItemResponse;
-import com.example.komsic.cryptoconverter.service.RestApiClient;
-import com.example.komsic.cryptoconverter.service.RestApiService;
 
-import retrofit2.Call;
 
-import static com.example.komsic.cryptoconverter.model.Currency.onChangeRatesValue;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Currency c = new Currency(Currency.CurrencyType.USD);
-                mAdapter.addItem(c);
-
+                DialogNewCard dialog = new DialogNewCard();
+                dialog.show(getFragmentManager(), "123");
+                //create(Currency.CurrencyType.CHF);
             }
         });
     }
@@ -94,5 +92,9 @@ public class MainActivity extends AppCompatActivity {
         ItemResponse.setbTC(btC);
         ItemResponse.seteTH(etH);
         btcToEthRateTV.setText(String.valueOf(ItemResponse.getBTC().getETH()));
+    }
+
+    public void create(Currency.CurrencyType currencyType) {
+        mAdapter.addItem(new Currency(currencyType));
     }
 }
