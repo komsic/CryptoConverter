@@ -1,5 +1,6 @@
 package com.example.komsic.cryptoconverter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Currency c = new Currency(Currency.CurrencyType.USD);
                 mAdapter.addItem(c);
+
             }
         });
     }

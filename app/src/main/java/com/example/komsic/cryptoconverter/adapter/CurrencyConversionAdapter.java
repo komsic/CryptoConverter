@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
+import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
 import com.example.komsic.cryptoconverter.model.Currency;
 
 import java.util.ArrayList;
@@ -67,15 +68,14 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CurrencyConversionAdapter.class);
+                Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
                 intent.putExtra("currencyName", currencyName);
                 intent.putExtra("btcToCurrentCurrencyRate", btcToCurrentCurrencyRate);
                 intent.putExtra("ethToCurrentCurrencyRate", ethToCurrentCurrencyRate);
-
                 mContext.startActivity(intent);
             }
         });
-        Toast.makeText(mContext, holder.ethCurrentCurrencyNameRate.getText().toString(), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
