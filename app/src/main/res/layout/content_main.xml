@@ -11,7 +11,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/crypto_exchange_rate_layout"
         tools:listitem="@layout/list_item_layout"
@@ -19,7 +19,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/crypto_exchange_rate_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="NGN"
+                android:text="ETH"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
                 android:textAppearance="?android:textAppearanceLarge"/>
@@ -63,6 +63,7 @@
                 android:src="@drawable/ic_arrow_forward"/>
 
             <TextView
+                android:id="@+id/btc_to_eth_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="1500000"

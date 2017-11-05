@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.model.Currency;
@@ -38,14 +39,30 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Currency currency = mList.get(position);
 
-        final String currencyName = currency.getCType().toString();
+        final String currencyName = currency.getCType().name();
         final String btcToCurrentCurrencyRate = String.valueOf(currency.getBTCRate());
         final String ethToCurrentCurrencyRate = String.valueOf(currency.getETHRate());
 
-        holder.btcCurrentCurrencyTV.setText(currencyName);
-        holder.ethCurrentCurrencyTV.setText(currencyName);
-        holder.btcCurrentCurrencyRateTV.setText(btcToCurrentCurrencyRate);
-        holder.ethCurrentCurrencyRateTV.setText(ethToCurrentCurrencyRate);
+
+
+//        if (holder.btcCurrentCurrencyTV != null) {
+//            holder.btcCurrentCurrencyTV.setText(currencyName);
+//        }
+//        if (holder.ethCurrentCurrencyTV != null) {
+//            holder.ethCurrentCurrencyTV.setText(currencyName);
+//        }
+//        if (holder.ethCurrentCurrencyRateTV != null) {
+//            holder.ethCurrentCurrencyRateTV.setText(ethToCurrentCurrencyRate);
+//        }
+//        if (holder.btcCurrentCurrencyRateTV != null) {
+//            holder.btcCurrentCurrencyRateTV.setText(ethToCurrentCurrencyRate);
+//        }
+        holder.btcCurrentCurrencyName.setText(currencyName);
+        holder.ethCurrentCurrencyName.setText(currencyName);
+        holder.btcCurrentCurrencyNameRate.setText(btcToCurrentCurrencyRate);
+        holder.ethCurrentCurrencyNameRate.setText(ethToCurrentCurrencyRate);
+        Toast.makeText(mContext, currencyName + " " + btcToCurrentCurrencyRate + " "
+                + ethToCurrentCurrencyRate, Toast.LENGTH_SHORT).show();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +75,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
                 mContext.startActivity(intent);
             }
         });
+        Toast.makeText(mContext, holder.ethCurrentCurrencyNameRate.getText().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -72,18 +90,20 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     public class CardViewHolder extends RecyclerView.ViewHolder{
 
-        TextView btcCurrentCurrencyTV;
-        TextView ethCurrentCurrencyTV;
-        TextView btcCurrentCurrencyRateTV;
-        TextView ethCurrentCurrencyRateTV;
+        TextView btcCurrentCurrencyName;
+        TextView ethCurrentCurrencyName;
+        TextView btcCurrentCurrencyNameRate;
+        TextView ethCurrentCurrencyNameRate;
 
         public CardViewHolder(View itemView) {
             super(itemView);
-            btcCurrentCurrencyTV = (TextView) itemView.findViewById(R.id.btc_currency_result_tv);
-            ethCurrentCurrencyTV = (TextView) itemView.findViewById(R.id.eth_currency_result_tv);
-            btcCurrentCurrencyRateTV = (TextView) itemView.findViewById(R.id
+            btcCurrentCurrencyName = (TextView) itemView.findViewById(R.id
+                    .btc_to_current_currency_tv);
+            ethCurrentCurrencyName = (TextView) itemView.findViewById(R.id
+                    .eth_to_current_currency_tv);
+            btcCurrentCurrencyNameRate = (TextView) itemView.findViewById(R.id
                     .btc_to_current_currency_rate_tv);
-            ethCurrentCurrencyRateTV = (TextView) itemView.findViewById(R.id
+            ethCurrentCurrencyNameRate = (TextView) itemView.findViewById(R.id
                     .eth_to_current_currency_rate_tv);
         }
     }

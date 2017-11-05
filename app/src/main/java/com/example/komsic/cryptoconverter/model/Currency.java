@@ -7,6 +7,7 @@ package com.example.komsic.cryptoconverter.model;
 public class Currency {
     private static CurrencyType cType;
 
+    // TODO try making the constructor 0s and look like set response
     public enum CurrencyType{
         ETH(ItemResponse.getBTC().getETH(), ItemResponse.getETH().getETH()),
         USD(ItemResponse.getBTC().getUSD(), ItemResponse.getETH().getUSD()),
@@ -46,6 +47,16 @@ public class Currency {
     public CurrencyType getCType()
     {
         return cType;
+    }
+
+    public double getBTCRate()
+    {
+        return cType.currencyBTCRate;
+    }
+
+    public double getETHRate()
+    {
+        return cType.currencyETHRate;
     }
 
     public static void onChangeRatesValue(){

@@ -4,14 +4,31 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
+import com.example.komsic.cryptoconverter.adapter.CurrencyConversionAdapter;
+import com.example.komsic.cryptoconverter.model.Currency;
+import com.example.komsic.cryptoconverter.model.CurrencyRate;
+import com.example.komsic.cryptoconverter.model.ItemResponse;
+import com.example.komsic.cryptoconverter.service.RestApiClient;
+import com.example.komsic.cryptoconverter.service.RestApiService;
+
+import retrofit2.Call;
+
+import static com.example.komsic.cryptoconverter.model.Currency.onChangeRatesValue;
 
 public class MainActivity extends AppCompatActivity {
+
+    private CurrencyConversionAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private TextView btcToEthRateTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +37,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        btcToEthRateTV = (TextView) findViewById(R.id.btc_to_eth_rate_tv);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(manager);
+
+        fetchData();
+
+        mAdapter = new CurrencyConversionAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Currency c = new Currency(Currency.CurrencyType.USD);
+                mAdapter.addItem(c);
             }
         });
     }
@@ -50,5 +78,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fetchData() {
+
+        //RestApiService apiService = new RestApiClient().getClient().create(RestApiService.class);
+        //Call<ItemResponse> userListCall
+        CurrencyRate btC = new CurrencyRate(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0,
+                12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0);
+        CurrencyRate etH = new CurrencyRate(22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
+                36, 37, 38, 39, 40, 41, 42);
+
+        ItemResponse.setbTC(btC);
+        ItemResponse.seteTH(etH);
+        btcToEthRateTV.setText(String.valueOf(ItemResponse.getBTC().getETH()));
     }
 }

@@ -24,4 +24,12 @@ public class ItemResponse {
     public static CurrencyRate getETH() {
         return eTH;
     }
+
+    public static void setbTC(CurrencyRate bTC) {
+        ItemResponse.bTC = bTC;
+    }
+
+    public static void seteTH(CurrencyRate eTH) {
+        ItemResponse.eTH = eTH;
+    }
 }
