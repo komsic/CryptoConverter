@@ -1,9 +1,7 @@
 package com.example.komsic.cryptoconverter.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DialogNewCard dialog = new DialogNewCard();
                 dialog.show(getFragmentManager(), "123");
-                //create(Currency.CurrencyType.CHF);
             }
         });
     }
@@ -80,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAdapter.saveCurrencyCards();
+    }
+
     private void fetchData() {
 
         //RestApiService apiService = new RestApiClient().getClient().create(RestApiService.class);
@@ -95,6 +98,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void create(Currency.CurrencyType currencyType) {
-        mAdapter.addItem(new Currency(currencyType));
+        mAdapter.addCurrencyCard(new Currency(currencyType));
     }
 }

@@ -3,6 +3,7 @@ package com.example.komsic.cryptoconverter.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
+import com.example.komsic.cryptoconverter.helper.JSONSerializer;
 import com.example.komsic.cryptoconverter.model.Currency;
 
 import java.util.ArrayList;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by komsic on 11/4/2017.
@@ -24,9 +28,26 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     private ArrayList<Currency> mList = new ArrayList<>();
     private Context mContext;
+    private JSONSerializer mSerializer;
 
     public CurrencyConversionAdapter(Context context) {
         mContext = context;
+
+        mSerializer = new JSONSerializer("CurrencyList.json", mContext);
+        try {
+            mList = mSerializer.load();
+        } catch (Exception e) {
+            mList = new ArrayList<>();
+            Log.e("Error Loading Currency:", "", e);
+        }
+    }
+
+    public void saveCurrencyCards() {
+        try {
+            mSerializer.save(mList);
+        } catch (Exception e) {
+            Log.e("Error Saving Currency: ", "", e);
+        }
     }
 
     @Override
@@ -45,20 +66,6 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         final String btcToCurrentCurrencyRate = String.valueOf(currency.getBTCRate());
         final String ethToCurrentCurrencyRate = String.valueOf(currency.getETHRate());
 
-
-
-//        if (holder.btcCurrentCurrencyTV != null) {
-//            holder.btcCurrentCurrencyTV.setText(currencyName);
-//        }
-//        if (holder.ethCurrentCurrencyTV != null) {
-//            holder.ethCurrentCurrencyTV.setText(currencyName);
-//        }
-//        if (holder.ethCurrentCurrencyRateTV != null) {
-//            holder.ethCurrentCurrencyRateTV.setText(ethToCurrentCurrencyRate);
-//        }
-//        if (holder.btcCurrentCurrencyRateTV != null) {
-//            holder.btcCurrentCurrencyRateTV.setText(ethToCurrentCurrencyRate);
-//        }
         holder.btcCurrentCurrencyName.setText(currencyName);
         holder.ethCurrentCurrencyName.setText(currencyName);
         holder.btcCurrentCurrencyNameRate.setText(btcToCurrentCurrencyRate);
@@ -84,9 +91,19 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         return mList.size();
     }
 
-    public void addItem(Currency currency){
+    public void addCurrencyCard(Currency currency){
         mList.add(currency);
         notifyItemInserted(mList.size() - 1);
+    }
+
+    public void removeCurrencyCard(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void removeAllCurrencyCards(int position) {
+        mList.clear();
+        notifyDataSetChanged();
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder{
