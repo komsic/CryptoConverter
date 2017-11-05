@@ -11,169 +11,196 @@ public class CurrencyRate {
 
     @SerializedName("ETH")
     @Expose
-    private Double eTH;
+    private double eTH;
 
     @SerializedName("USD")
     @Expose
-    private Double uSD;
+    private double uSD;
 
     @SerializedName("CAD")
     @Expose
-    private Double cAD;
+    private double cAD;
 
     @SerializedName("EUR")
     @Expose
-    private Double eUR;
+    private double eUR;
 
     @SerializedName("GBP")
     @Expose
-    private Double gBP;
+    private double gBP;
 
     @SerializedName("CNY")
     @Expose
-    private Double cNY;
+    private double cNY;
 
     @SerializedName("CHF")
     @Expose
-    private Double cHF;
+    private double cHF;
 
     @SerializedName("AUD")
     @Expose
-    private Double aUD;
+    private double aUD;
 
     @SerializedName("JPY")
     @Expose
-    private Double jPY;
+    private double jPY;
 
     @SerializedName("SEK")
     @Expose
-    private Double sEK;
+    private double sEK;
 
     @SerializedName("MXN")
     @Expose
-    private Double mXN;
+    private double mXN;
 
     @SerializedName("NZD")
     @Expose
-    private Double nZD;
+    private double nZD;
 
     @SerializedName("SGD")
     @Expose
-    private Double sGD;
+    private double sGD;
 
     @SerializedName("HKD")
     @Expose
-    private Double hKD;
+    private double hKD;
 
     @SerializedName("NOK")
     @Expose
-    private Double nOK;
+    private double nOK;
 
     @SerializedName("TRY")
     @Expose
-    private Double tRY;
+    private double tRY;
 
     @SerializedName("RUB")
     @Expose
-    private Double rUB;
+    private double rUB;
 
     @SerializedName("ZAR")
     @Expose
-    private Double zAR;
+    private double zAR;
 
     @SerializedName("BRL")
     @Expose
-    private Double bRL;
+    private double bRL;
 
     @SerializedName("MYR")
     @Expose
-    private Double mYR;
+    private double mYR;
 
     @SerializedName("NGN")
     @Expose
-    private Double nGN;
+    private double nGN;
 
-    public Double getETH() {
+    public CurrencyRate(double eTH, double uSD, double cAD, double eUR, double gBP, double cNY,
+                        double cHF, double aUD, double jPY, double sEK, double XN, double nZD,
+                        double sGD, double hKD, double nOK, double tRY, double rUB, double zAR,
+                        double bRL, double YR, double nGN) {
+        this.eTH = eTH;
+        this.uSD = uSD;
+        this.cAD = cAD;
+        this.eUR = eUR;
+        this.gBP = gBP;
+        this.cNY = cNY;
+        this.cHF = cHF;
+        this.aUD = aUD;
+        this.jPY = jPY;
+        this.sEK = sEK;
+        mXN = XN;
+        this.nZD = nZD;
+        this.sGD = sGD;
+        this.hKD = hKD;
+        this.nOK = nOK;
+        this.tRY = tRY;
+        this.rUB = rUB;
+        this.zAR = zAR;
+        this.bRL = bRL;
+        mYR = YR;
+        this.nGN = nGN;
+    }
+
+    public double getETH() {
         return eTH;
     }
 
-    public Double getUSD() {
+    public double getUSD() {
         return uSD;
     }
 
-    public Double getCAD() {
+    public double getCAD() {
         return cAD;
     }
 
-    public Double getEUR() {
+    public double getEUR() {
         return eUR;
     }
 
-    public Double getGBP() {
+    public double getGBP() {
         return gBP;
     }
 
-    public Double getCNY() {
+    public double getCNY() {
         return cNY;
     }
 
-    public Double getCHF() {
+    public double getCHF() {
         return cHF;
     }
 
-    public Double getAUD() {
+    public double getAUD() {
         return aUD;
     }
 
-    public Double getJPY() {
+    public double getJPY() {
         return jPY;
     }
 
-    public Double getSEK() {
+    public double getSEK() {
         return sEK;
     }
 
-    public Double getMXN() {
+    public double getMXN() {
         return mXN;
     }
 
-    public Double getNZD() {
+    public double getNZD() {
         return nZD;
     }
 
-    public Double getSGD() {
+    public double getSGD() {
         return sGD;
     }
 
-    public Double getHKD() {
+    public double getHKD() {
         return hKD;
     }
 
-    public Double getNOK() {
+    public double getNOK() {
         return nOK;
     }
 
-    public Double getTRY() {
+    public double getTRY() {
         return tRY;
     }
 
-    public Double getRUB() {
+    public double getRUB() {
         return rUB;
     }
 
-    public Double getZAR() {
+    public double getZAR() {
         return zAR;
     }
 
-    public Double getBRL() {
+    public double getBRL() {
         return bRL;
     }
 
-    public Double getMYR() {
+    public double getMYR() {
         return mYR;
     }
 
-    public Double getNGN() {
+    public double getNGN() {
         return nGN;
     }
 
