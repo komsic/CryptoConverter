@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  */
 
 public interface RestApiService {
-    @GET("/data/pricemulti?fsyms=BTC,ETH&tsyms=ETH,USD,CAD,EUR,GBP,CNY,CHF,AUD,JPY,SEK,MXN,NZD,SGD,HKD,NOK,TRY,RUB,ZAR,BRL,MYR,NGN")
+    @GET("https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=ETH,USD,CAD,EUR,GBP,CNY,CHF,AUD,JPY,SEK,MXN,NZD,SGD,HKD,NOK,TRY,RUB,ZAR,BRL,MYR,NGN")
     Call<ItemResponse> getItemResponse();
 }

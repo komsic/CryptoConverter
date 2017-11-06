@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.MainActivity;

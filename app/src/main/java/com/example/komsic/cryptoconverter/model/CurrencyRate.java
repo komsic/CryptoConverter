@@ -93,57 +93,6 @@ public class CurrencyRate {
     @Expose
     private double nGN;
 
-    public CurrencyRate(double eTH, double uSD, double cAD, double eUR, double gBP, double cNY,
-                        double cHF, double aUD, double jPY, double sEK, double XN, double nZD,
-                        double sGD, double hKD, double nOK, double tRY, double rUB, double zAR,
-                        double bRL, double YR, double nGN) {
-        this.eTH = eTH;
-        this.uSD = uSD;
-        this.cAD = cAD;
-        this.eUR = eUR;
-        this.gBP = gBP;
-        this.cNY = cNY;
-        this.cHF = cHF;
-        this.aUD = aUD;
-        this.jPY = jPY;
-        this.sEK = sEK;
-        mXN = XN;
-        this.nZD = nZD;
-        this.sGD = sGD;
-        this.hKD = hKD;
-        this.nOK = nOK;
-        this.tRY = tRY;
-        this.rUB = rUB;
-        this.zAR = zAR;
-        this.bRL = bRL;
-        mYR = YR;
-        this.nGN = nGN;
-    }
-
-    public CurrencyRate() {
-        this.eTH = 0;
-        this.uSD = 0;
-        this.cAD = 0;
-        this.eUR = 0;
-        this.gBP = 0;
-        this.cNY = 0;
-        this.cHF = 0;
-        this.aUD = 0;
-        this.jPY = 0;
-        this.sEK = 0;
-        mXN = 0;
-        this.nZD = 0;
-        this.sGD = 0;
-        this.hKD = 0;
-        this.nOK = 0;
-        this.tRY = 0;
-        this.rUB = 0;
-        this.zAR = 0;
-        this.bRL = 0;
-        mYR = 0;
-        this.nGN = 0;
-    }
-
     public double getETH() {
         return eTH;
     }
@@ -229,7 +178,7 @@ public class CurrencyRate {
     }
 
     public double getRate(Currency.CurrencyType cType) {
-        double amount = 0;
+        double amount;
         switch(cType){
             case ETH:
                 amount = getETH();
@@ -298,7 +247,6 @@ public class CurrencyRate {
                 amount = -1;
                 break;
         }
-
         return amount;
     }
 }

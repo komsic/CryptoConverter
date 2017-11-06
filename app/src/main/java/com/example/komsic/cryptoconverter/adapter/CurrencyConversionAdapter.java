@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
 import com.example.komsic.cryptoconverter.helper.JSONSerializer;
 import com.example.komsic.cryptoconverter.model.Currency;
+import com.example.komsic.cryptoconverter.model.ItemResponse;
 
 import java.util.ArrayList;
 
@@ -27,10 +27,12 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     private ArrayList<Currency> mList = new ArrayList<>();
     private Context mContext;
+    private ItemResponse mItemResponse;
     private JSONSerializer mSerializer;
 
-    public CurrencyConversionAdapter(Context context) {
+    public CurrencyConversionAdapter(Context context, ItemResponse itemResponse) {
         mContext = context;
+        mItemResponse = itemResponse;
 
         mSerializer = new JSONSerializer("CurrencyList.json", mContext);
         try {
@@ -41,7 +43,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
     }
 
-    public void saveCurrencyCards() {
+    public void saveCurrencyCardsToMemory() {
         try {
             mSerializer.save(mList);
         } catch (Exception e) {
@@ -57,9 +59,9 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, final int position) {
-        Currency.CurrencyType.onChangeRatesValue();
+    public void onBindViewHolder(final CardViewHolder holder, int position) {
         Currency currency = mList.get(position);
+        currency.onChangeRatesValue(mItemResponse);
 
         final String currencyName = currency.getCType().name();
         final String btcToCurrentCurrencyRate = String.valueOf(currency.getBTCRate());
@@ -69,8 +71,6 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.ethCurrentCurrencyName.setText(currencyName);
         holder.btcCurrentCurrencyNameRate.setText(btcToCurrentCurrencyRate);
         holder.ethCurrentCurrencyNameRate.setText(ethToCurrentCurrencyRate);
-        Toast.makeText(mContext, currencyName + " " + btcToCurrentCurrencyRate + " "
-                + ethToCurrentCurrencyRate, Toast.LENGTH_SHORT).show();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.deleteCurrencyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeCurrencyCard(position);
+                removeCurrencyCard(holder.getAdapterPosition());
             }
         });
     }
@@ -101,7 +101,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         notifyItemInserted(mList.size() - 1);
     }
 
-    public void removeCurrencyCard(int position) throws IndexOutOfBoundsException{
+    private void removeCurrencyCard(int position) throws IndexOutOfBoundsException{
         try {
             mList.remove(position);
             notifyItemRemoved(position);

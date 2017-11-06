@@ -11,27 +11,22 @@ public class ItemResponse {
 
     @SerializedName("BTC")
     @Expose
-    private static CurrencyRate bTC;
+    private CurrencyRate bTC;
 
     @SerializedName("ETH")
     @Expose
-    private static CurrencyRate eTH;
+    private CurrencyRate eTH;
 
-    public static CurrencyRate getBTC() {
+    public ItemResponse() {
+        bTC = new CurrencyRate();
+        eTH = new CurrencyRate();
+    }
+
+    public CurrencyRate getBTC() {
         return bTC;
     }
 
-    public static CurrencyRate getETH() {
+    public  CurrencyRate getETH() {
         return eTH;
-    }
-
-    public static CurrencyRate setBTC() {
-        ItemResponse.bTC = new CurrencyRate();
-        return ItemResponse.bTC;
-    }
-
-    public static CurrencyRate setETH() {
-        ItemResponse.eTH = new CurrencyRate();
-        return  ItemResponse.eTH;
     }
 }
