@@ -120,6 +120,30 @@ public class CurrencyRate {
         this.nGN = nGN;
     }
 
+    public CurrencyRate() {
+        this.eTH = 0;
+        this.uSD = 0;
+        this.cAD = 0;
+        this.eUR = 0;
+        this.gBP = 0;
+        this.cNY = 0;
+        this.cHF = 0;
+        this.aUD = 0;
+        this.jPY = 0;
+        this.sEK = 0;
+        mXN = 0;
+        this.nZD = 0;
+        this.sGD = 0;
+        this.hKD = 0;
+        this.nOK = 0;
+        this.tRY = 0;
+        this.rUB = 0;
+        this.zAR = 0;
+        this.bRL = 0;
+        mYR = 0;
+        this.nGN = 0;
+    }
+
     public double getETH() {
         return eTH;
     }

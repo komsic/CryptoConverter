@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +17,6 @@ import com.example.komsic.cryptoconverter.helper.JSONSerializer;
 import com.example.komsic.cryptoconverter.model.Currency;
 
 import java.util.ArrayList;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by komsic on 11/4/2017.
@@ -58,7 +57,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(CardViewHolder holder, final int position) {
         Currency.CurrencyType.onChangeRatesValue();
         Currency currency = mList.get(position);
 
@@ -84,6 +83,12 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
             }
         });
 
+        holder.deleteCurrencyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeCurrencyCard(position);
+            }
+        });
     }
 
     @Override
@@ -96,14 +101,22 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         notifyItemInserted(mList.size() - 1);
     }
 
-    public void removeCurrencyCard(int position) {
-        mList.remove(position);
-        notifyItemRemoved(position);
+    public void removeCurrencyCard(int position) throws IndexOutOfBoundsException{
+        try {
+            mList.remove(position);
+            notifyItemRemoved(position);
+        } catch (Exception e) {
+            Log.e("List is Empty: ", "", e);
+        }
     }
 
-    public void removeAllCurrencyCards(int position) {
-        mList.clear();
-        notifyDataSetChanged();
+    public void removeAllCurrencyCards() throws IndexOutOfBoundsException{
+        try {
+            mList.clear();
+            notifyDataSetChanged();
+        } catch (Exception e) {
+            Log.e("List is Empty: ", "", e);
+        }
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder{
@@ -112,6 +125,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         TextView ethCurrentCurrencyName;
         TextView btcCurrentCurrencyNameRate;
         TextView ethCurrentCurrencyNameRate;
+        ImageView deleteCurrencyCard;
 
         public CardViewHolder(View itemView) {
             super(itemView);
@@ -123,6 +137,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
                     .btc_to_current_currency_rate_tv);
             ethCurrentCurrencyNameRate = (TextView) itemView.findViewById(R.id
                     .eth_to_current_currency_rate_tv);
+            deleteCurrencyCard = (ImageView) itemView.findViewById(R.id.delete_img);
         }
     }
 }

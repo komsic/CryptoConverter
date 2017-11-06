@@ -25,11 +25,13 @@ public class ItemResponse {
         return eTH;
     }
 
-    public static void setBTC(CurrencyRate bTC) {
-        ItemResponse.bTC = bTC;
+    public static CurrencyRate setBTC() {
+        ItemResponse.bTC = new CurrencyRate();
+        return ItemResponse.bTC;
     }
 
-    public static void setETH(CurrencyRate eTH) {
-        ItemResponse.eTH = eTH;
+    public static CurrencyRate setETH() {
+        ItemResponse.eTH = new CurrencyRate();
+        return  ItemResponse.eTH;
     }
 }

@@ -15,14 +15,23 @@ public class Currency {
     private static final String JSON_ETH_RATE = "ETH Rate";
 
     public enum CurrencyType{
-        ETH(), USD(), CAD(), EUR(), GBP(), CNY(), CHF(), AUD(), JPY(), SEK(), MXN(), NZD(), SGD(),
-        HKD(), NOK(), TRY(), RUB(), ZAR(), BRL(), MYR(), NGN();
+        ETH(0.0, 0.0), USD(0.0, 0.0), CAD(0.0, 0.0), EUR(0.0, 0.0), GBP(0.0, 0.0), CNY(0.0, 0.0),
+        CHF(0.0, 0.0), AUD(0.0, 0.0), JPY(0.0, 0.0), SEK(0.0, 0.0), MXN(0.0, 0.0), NZD(0.0, 0.0),
+        SGD(0.0, 0.0), HKD(0.0, 0.0), NOK(0.0, 0.0), TRY(0.0, 0.0), RUB(0.0, 0.0), ZAR(0.0, 0.0),
+        BRL(0.0, 0.0), MYR(0.0, 0.0), NGN(0.0, 0.0);
 
         private double currencyToBTCRate;
         private double currencyToETHRate;
 
+        CurrencyType(double currencyToBTCRate, double currencyToETHRate) {
+            this.currencyToBTCRate = currencyToBTCRate;
+            this.currencyToETHRate = currencyToETHRate;
+        }
+
         CurrencyType() {
         }
+
+
 
         public static void onChangeRatesValue(){
             cType.currencyToBTCRate = ItemResponse.getBTC().getRate(cType);
