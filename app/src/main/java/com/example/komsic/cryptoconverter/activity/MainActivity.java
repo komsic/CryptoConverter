@@ -24,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.os.Build.VERSION_CODES.M;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,11 +45,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
+        mAdapter = new CurrencyConversionAdapter(MainActivity.this);
 
         mItemResponse = new ItemResponse();
         fetchData();
 
-
+        mRecyclerView.setAdapter(mAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mAdapter.saveCurrencyCardsToMemory();
+        if (mAdapter != null) {
+            mAdapter.saveCurrencyCardsToMemory();
+        }
     }
 
     private void fetchData() {
@@ -94,13 +100,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ItemResponse> call, Response<ItemResponse> response) {
                 if(response.isSuccessful()){
-                    // TODO do something clue commit mRe to memmory and find a way to make it not null pointer try new () first
                     mItemResponse = response.body();
                     btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
-                    mAdapter = new CurrencyConversionAdapter(MainActivity.this, mItemResponse);
-                    mRecyclerView.setAdapter(mAdapter);
-//                    Currency.CurrencyType.onChangeRatesValue();
-//                    btcToEthRateTV.setText(String.valueOf(ItemResponse.getBTC().getETH()));
+                    mAdapter.setItemResponse(mItemResponse);
+
+//                    mAdapter = new CurrencyConversionAdapter(MainActivity.this, mItemResponse);
+//                    mRecyclerView.setAdapter(mAdapter);
                 }
             }
 
@@ -113,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void create(Currency.CurrencyType currencyType) {
-        mAdapter.addCurrencyCard(new Currency(currencyType));
+        if (mAdapter != null) {
+            mAdapter.addCurrencyCard(new Currency(currencyType));
+        } else {
+            Toast.makeText(this, "Cant Create Card", Toast.LENGTH_SHORT).show();
+        }
     }
 }

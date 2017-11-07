@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
@@ -30,17 +31,42 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     private ItemResponse mItemResponse;
     private JSONSerializer mSerializer;
 
-    public CurrencyConversionAdapter(Context context, ItemResponse itemResponse) {
-        mContext = context;
-        mItemResponse = itemResponse;
+//    public CurrencyConversionAdapter(Context context) {
+//        mSerializer = new JSONSerializer("CurrencyList.json", mContext);
+//        try {
+//            mList = mSerializer.load();
+//            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            mList = new ArrayList<>();
+//            Log.e("Error Loading Currency:", "", e);
+//        }
+//    }
 
+    public CurrencyConversionAdapter(Context context) {
+//        this(context);
+        mContext = context;
+        mItemResponse = new ItemResponse();
         mSerializer = new JSONSerializer("CurrencyList.json", mContext);
         try {
             mList = mSerializer.load();
+            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show();
+			if(mList.size() > 0){
+				// TODO 2nd edit
+				for (int i = 0; i < mList.size(); i++){
+					Currency c = mList.get(i);
+					mItemResponse.getBTC().initialize(c.getCType(), c.getBTCRate());
+					mItemResponse.getETH().initialize(c.getCType(), c.getBTCRate());
+				}
+			}
         } catch (Exception e) {
             mList = new ArrayList<>();
             Log.e("Error Loading Currency:", "", e);
         }
+    }
+
+    public void setItemResponse(ItemResponse itemResponse) {
+        mItemResponse = itemResponse;
+        notifyDataSetChanged();
     }
 
     public void saveCurrencyCardsToMemory() {

@@ -3,6 +3,8 @@ package com.example.komsic.cryptoconverter.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import static com.example.komsic.cryptoconverter.model.Currency.CurrencyType.GBP;
+
 /**
  * Created by komsic on 11/4/2017.
  */
@@ -93,88 +95,172 @@ public class CurrencyRate {
     @Expose
     private double nGN;
 
-    public double getETH() {
+    private double getETH() {
         return eTH;
     }
 
-    public double getUSD() {
+    private double getUSD() {
         return uSD;
     }
 
-    public double getCAD() {
+    private double getCAD() {
         return cAD;
     }
 
-    public double getEUR() {
+    private double getEUR() {
         return eUR;
     }
 
-    public double getGBP() {
+    private double getGBP() {
         return gBP;
     }
 
-    public double getCNY() {
+    private double getCNY() {
         return cNY;
     }
 
-    public double getCHF() {
+    private double getCHF() {
         return cHF;
     }
 
-    public double getAUD() {
+    private double getAUD() {
         return aUD;
     }
 
-    public double getJPY() {
+    private double getJPY() {
         return jPY;
     }
 
-    public double getSEK() {
+    private double getSEK() {
         return sEK;
     }
 
-    public double getMXN() {
+    private double getMXN() {
         return mXN;
     }
 
-    public double getNZD() {
+    private double getNZD() {
         return nZD;
     }
 
-    public double getSGD() {
+    private double getSGD() {
         return sGD;
     }
 
-    public double getHKD() {
+    private double getHKD() {
         return hKD;
     }
 
-    public double getNOK() {
+    private double getNOK() {
         return nOK;
     }
 
-    public double getTRY() {
+    private double getTRY() {
         return tRY;
     }
 
-    public double getRUB() {
+    private double getRUB() {
         return rUB;
     }
 
-    public double getZAR() {
+    private double getZAR() {
         return zAR;
     }
 
-    public double getBRL() {
+    private double getBRL() {
         return bRL;
     }
 
-    public double getMYR() {
+    private double getMYR() {
         return mYR;
     }
 
-    public double getNGN() {
+    private double getNGN() {
         return nGN;
+    }
+
+    public void seteTH(double eTH) {
+        this.eTH = eTH;
+    }
+
+    public void setuSD(double uSD) {
+        this.uSD = uSD;
+    }
+
+    public void setcAD(double cAD) {
+        this.cAD = cAD;
+    }
+
+    public void seteUR(double eUR) {
+        this.eUR = eUR;
+    }
+
+    public void setgBP(double gBP) {
+        this.gBP = gBP;
+    }
+
+    public void setcNY(double cNY) {
+        this.cNY = cNY;
+    }
+
+    public void setcHF(double cHF) {
+        this.cHF = cHF;
+    }
+
+    public void setaUD(double aUD) {
+        this.aUD = aUD;
+    }
+
+    public void setjPY(double jPY) {
+        this.jPY = jPY;
+    }
+
+    public void setsEK(double sEK) {
+        this.sEK = sEK;
+    }
+
+    public void setXN(double XN) {
+        mXN = XN;
+    }
+
+    public void setnZD(double nZD) {
+        this.nZD = nZD;
+    }
+
+    public void setsGD(double sGD) {
+        this.sGD = sGD;
+    }
+
+    public void sethKD(double hKD) {
+        this.hKD = hKD;
+    }
+
+    public void setnOK(double nOK) {
+        this.nOK = nOK;
+    }
+
+    public void settRY(double tRY) {
+        this.tRY = tRY;
+    }
+
+    public void setrUB(double rUB) {
+        this.rUB = rUB;
+    }
+
+    public void setzAR(double zAR) {
+        this.zAR = zAR;
+    }
+
+    public void setbRL(double bRL) {
+        this.bRL = bRL;
+    }
+
+    public void setYR(double YR) {
+        mYR = YR;
+    }
+
+    public void setnGN(double nGN) {
+        this.nGN = nGN;
     }
 
     public double getRate(Currency.CurrencyType cType) {
@@ -248,5 +334,73 @@ public class CurrencyRate {
                 break;
         }
         return amount;
+    }
+
+    public void initialize(Currency.CurrencyType cType, double d) {
+        switch(cType){
+            case ETH:
+                seteTH(d);
+                break;
+            case USD:
+                setuSD(d);
+                break;
+            case CAD:
+                setcAD(d);
+                break;
+            case EUR:
+                seteUR(d);
+                break;
+            case GBP:
+                setgBP(d); 
+				break;
+            case CNY: 
+				setcNY(d);
+                break;
+            case CHF:
+                setcHF(d);
+                break;
+            case AUD:
+                setaUD(d);
+                break;
+            case JPY:
+                setjPY(d);
+                break;
+            case SEK:
+                setsEK(d);
+                break;
+            case MXN:
+                setXN(d);
+                break;
+            case NZD:
+                setnZD(d);
+                break;
+            case SGD:
+                setsGD(d);
+                break;
+            case HKD:
+                sethKD(d);
+                break;
+            case NOK:
+                setnOK(d);
+                break;
+            case TRY:
+                settRY(d);
+                break;
+            case RUB:
+                setrUB(d);
+                break;
+            case ZAR:
+                setzAR(d);
+                break;
+            case BRL:
+                setbRL(d);
+                break;
+            case MYR:
+                setYR(d);
+                break;
+            case NGN:
+                setnGN(d);
+                break;
+        }
     }
 }
