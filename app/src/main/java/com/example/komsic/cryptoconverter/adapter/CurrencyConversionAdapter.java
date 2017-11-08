@@ -115,13 +115,20 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     }
 
     public void addCurrencyCard(Currency currency){
+        boolean cardAlreadyExist = false;
+
         for (int i = 0; i < mList.size(); i++) {
             if (currency.getCType() == mList.get(i).getCType()) {
-                Toast.makeText(mContext, "Card already in existed", Toast.LENGTH_SHORT).show();
-            } else {
-                mList.add(currency);
-                notifyItemInserted(mList.size() - 1);
+                cardAlreadyExist = true;
+                break;
             }
+        }
+
+        if (cardAlreadyExist != false) {
+            Toast.makeText(mContext, "Card Already in Existed", Toast.LENGTH_SHORT).show();
+        } else {
+            mList.add(currency);
+            notifyItemInserted(mList.size() - 1);
         }
     }
 
