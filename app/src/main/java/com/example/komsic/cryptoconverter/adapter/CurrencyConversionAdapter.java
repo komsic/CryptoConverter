@@ -150,7 +150,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
     }
 
-    public class CardViewHolder extends RecyclerView.ViewHolder{
+    class CardViewHolder extends RecyclerView.ViewHolder{
 
         TextView btcCurrentCurrencyName;
         TextView ethCurrentCurrencyName;
@@ -158,7 +158,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         TextView ethCurrentCurrencyNameRate;
         ImageView deleteCurrencyCard;
 
-        public CardViewHolder(View itemView) {
+        CardViewHolder(View itemView) {
             super(itemView);
             btcCurrentCurrencyName = (TextView) itemView.findViewById(R.id
                     .btc_to_current_currency_tv);
