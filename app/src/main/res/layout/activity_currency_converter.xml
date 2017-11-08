@@ -39,7 +39,8 @@
                     android:id="@+id/convert_edt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Amount Here"/>
+                    android:hint="Enter Amount Here"
+					android:inputType="numberDecimal"/>
 
             </LinearLayout>
 
