@@ -31,19 +31,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     private ItemResponse mItemResponse;
     private JSONSerializer mSerializer;
 
-//    public CurrencyConversionAdapter(Context context) {
-//        mSerializer = new JSONSerializer("CurrencyList.json", mContext);
-//        try {
-//            mList = mSerializer.load();
-//            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show();
-//        } catch (Exception e) {
-//            mList = new ArrayList<>();
-//            Log.e("Error Loading Currency:", "", e);
-//        }
-//    }
-
     public CurrencyConversionAdapter(Context context) {
-//        this(context);
         mContext = context;
         mItemResponse = new ItemResponse();
         mSerializer = new JSONSerializer("CurrencyList.json", mContext);
@@ -56,6 +44,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 					Currency c = mList.get(i);
 					mItemResponse.getBTC().initialize(c.getCType(), c.getBTCRate());
 					mItemResponse.getETH().initialize(c.getCType(), c.getBTCRate());
+					notifyDataSetChanged();
 				}
 			}
         } catch (Exception e) {

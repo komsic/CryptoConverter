@@ -29,10 +29,4 @@ public class ItemResponse {
     public  CurrencyRate getETH() {
         return eTH;
     }
-
-//	TODO 3rd edit refactoring
-//	public void initializeItemResponse(Currency c, double d){ 
-//		mItemResponse.getBTC().initialize(c.getCType(), c.getBTCRate());
-//		mItemResponse.getETH().initialize(c.getCType(), c.getBTCRate());
-//	}
 }

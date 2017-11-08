@@ -40,14 +40,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+	
+		mItemResponse = new ItemResponse();
+		
         btcToEthRateTV = (TextView) findViewById(R.id.btc_to_eth_rate_tv);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new CurrencyConversionAdapter(MainActivity.this);
-
-        mItemResponse = new ItemResponse();
+        
+		btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
         fetchData();
 
         mRecyclerView.setAdapter(mAdapter);
@@ -103,9 +105,6 @@ public class MainActivity extends AppCompatActivity {
                     mItemResponse = response.body();
                     btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
                     mAdapter.setItemResponse(mItemResponse);
-
-//                    mAdapter = new CurrencyConversionAdapter(MainActivity.this, mItemResponse);
-//                    mRecyclerView.setAdapter(mAdapter);
                 }
             }
 

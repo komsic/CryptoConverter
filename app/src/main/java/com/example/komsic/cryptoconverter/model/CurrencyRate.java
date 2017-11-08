@@ -95,7 +95,7 @@ public class CurrencyRate {
     @Expose
     private double nGN;
 
-    private double getETH() {
+    public double getETH() {
         return eTH;
     }
 
