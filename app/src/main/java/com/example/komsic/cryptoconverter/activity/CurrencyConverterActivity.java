@@ -32,12 +32,20 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 		mCurrentCurrencyResultTxt = (TextView) findViewById(R.id.current_currency_result_tv);
 		mBTCResultTxt = (TextView) findViewById(R.id.btc_currency_result_tv);
 		mETHResultTxt = (TextView) findViewById(R.id.eth_currency_result_tv);
-	
-		Intent intent = new Intent();
-		selectedCurrencyName = intent.getExtras().getString("currencyName");
-		String[] spinnerArray = {"BTC", "ETH", selectedCurrencyName};
-		mConverterSpinner.setAdapter(spinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
-																		   spinnerArray)));
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null){
+            finish();
+        }else{
+            selectedCurrencyName = bundle.getString("currencyName");
+        }
+
+		mCurrentCurrencyNameTxt.setText(selectedCurrencyName);
+
+		String[] spinnerArray = {selectedCurrencyName, "BTC", "ETH"};
+		mConverterSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+				spinnerArray));
+
 		getSupportActionBar().setTitle(selectedCurrencyName);
     }
 
@@ -47,11 +55,14 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 		try{
 			double amountTobeConverted = Double.parseDouble(edtInput);
 			if (amountTobeConverted > 0.0){
-				double[] convertedAmount = (new Currency(Currency.CurrencyType.valueOf(selectedCurrencyName))).convert(selectedCurrencyName, amountTobeConverted);
+				double[] convertedAmount =
+                        (new Currency(Currency.CurrencyType.valueOf(selectedCurrencyName)))
+                                .convert(mConverterSpinner.getSelectedItem().toString(),
+                                        amountTobeConverted);
 
 				mResultLayout.setVisibility(View.VISIBLE);
-				mCurrentCurrencyNameTxt.setText(selectedCurrencyName);
-				mCurrentCurrencyResultTxt.setText(String.valueOf(convertedAmount[Currency.CURRENT_CURRENCY]));
+				mCurrentCurrencyResultTxt.setText(String
+						.valueOf(convertedAmount[Currency.CURRENT_CURRENCY]));
 				mBTCResultTxt.setText(String.valueOf(convertedAmount[Currency.BTC]));
 				mETHResultTxt.setText(String.valueOf(convertedAmount[Currency.ETH]));
 			} else {

@@ -42,8 +42,9 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 				// TODO 2nd edit
 				for (int i = 0; i < mList.size(); i++){
 					Currency c = mList.get(i);
-					mItemResponse.getBTC().initialize(c.getCType(), c.getBTCRate());
-					mItemResponse.getETH().initialize(c.getCType(), c.getBTCRate());
+					mItemResponse.getBTC().initialize(c.getCType(), c.getCurrencyToBTCRate());
+					mItemResponse.getETH().initialize(c.getCType(), c.getCurrencyToETHRate());
+					mItemResponse.getBTC().initialize(c.getCType(), c.getETHToBTCRate());
 					notifyDataSetChanged();
 				}
 			}
@@ -79,8 +80,8 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         currency.onChangeRatesValue(mItemResponse);
 
         final String currencyName = currency.getCType().name();
-        final String btcToCurrentCurrencyRate = String.valueOf(currency.getBTCRate());
-        final String ethToCurrentCurrencyRate = String.valueOf(currency.getETHRate());
+        final String btcToCurrentCurrencyRate = String.valueOf(currency.getCurrencyToBTCRate());
+        final String ethToCurrentCurrencyRate = String.valueOf(currency.getCurrencyToETHRate());
 
         holder.btcCurrentCurrencyName.setText(currencyName);
         holder.ethCurrentCurrencyName.setText(currencyName);

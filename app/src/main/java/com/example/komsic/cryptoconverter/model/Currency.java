@@ -65,12 +65,12 @@ public class Currency {
 		cType.bTCToETHRate = itemResponse.getBTC().getETH();
     }
 
-    public double getBTCRate()
+    public double getCurrencyToBTCRate()
     {
         return cType.currencyToBTCRate;
     }
 
-    public double getETHRate()
+    public double getCurrencyToETHRate()
     {
         return cType.currencyToETHRate;
     }
@@ -131,7 +131,7 @@ public class Currency {
 			default:
 				convertedResults[CURRENT_CURRENCY] = amountTobeConverted;
 				convertedResults[BTC] = convertFromCurrencyToBTC(amountTobeConverted);
-				convertedResults[ETH] = convertFromCurrencyToBTC(amountTobeConverted);
+				convertedResults[ETH] = convertFromCurrencyToETH(amountTobeConverted);
 		}
 		return convertedResults;
 	}

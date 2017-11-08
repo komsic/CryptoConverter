@@ -20,102 +20,110 @@
             android:id="@+id/delete_img"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_delete"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end"
+            android:src="@drawable/ic_delete"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="bottom|center"
             android:layout_weight="1"
+            android:gravity="bottom|center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BTC"
-                android:layout_marginRight="8dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                android:layout_marginRight="8dp"
+                android:text="BTC"
+                android:textAppearance="?android:textAppearanceMedium"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/ic_compare_arrow"/>
 
             <TextView
                 android:id="@+id/btc_to_current_currency_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NGN"
-                android:layout_marginRight="8dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                android:layout_marginRight="8dp"
+                android:text="NGN"
+                android:textAppearance="?android:textAppearanceMedium"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/ic_arrow_forward"/>
 
             <TextView
                 android:id="@+id/btc_to_current_currency_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="1500000"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:textStyle="bold"/>
+                android:layout_gravity="center"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#222222"
+                android:textStyle="bold"
+                tools:text="1500000"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="top|center"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ETH"
-                android:layout_marginRight="8dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                android:layout_marginRight="8dp"
+                android:text="ETH"
+                android:textAppearance="?android:textAppearanceMedium"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/ic_compare_arrow"/>
 
             <TextView
                 android:id="@+id/eth_to_current_currency_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NGN"
-                android:layout_marginRight="8dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                android:layout_marginRight="8dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                tools:text="NGN"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/ic_arrow_forward"/>
 
             <TextView
                 android:id="@+id/eth_to_current_currency_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="500000"
+                android:layout_gravity="center"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#222222"
                 android:textStyle="bold"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                tools:text="500000"/>
 
         </LinearLayout>
 
