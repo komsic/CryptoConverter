@@ -44,7 +44,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 					Currency c = mList.get(i);
 					mItemResponse.getBTC().initialize(c.getCType(), c.getCurrencyToBTCRate());
 					mItemResponse.getETH().initialize(c.getCType(), c.getCurrencyToETHRate());
-					mItemResponse.getBTC().initialize(c.getCType(), c.getETHToBTCRate());
+					mItemResponse.getBTC().initialize(Currency.CurrencyType.ETH, c.getETHToBTCRate());
 					notifyDataSetChanged();
 				}
 			}
@@ -57,6 +57,10 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     public void setItemResponse(ItemResponse itemResponse) {
         mItemResponse = itemResponse;
         notifyDataSetChanged();
+    }
+
+    public ItemResponse getItemResponse() {
+        return mItemResponse;
     }
 
     public void saveCurrencyCardsToMemory() {
@@ -93,8 +97,6 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
                 intent.putExtra("currencyName", currencyName);
-                intent.putExtra("btcToCurrentCurrencyRate", btcToCurrentCurrencyRate);
-                intent.putExtra("ethToCurrentCurrencyRate", ethToCurrentCurrencyRate);
                 mContext.startActivity(intent);
             }
         });
@@ -113,8 +115,14 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
     }
 
     public void addCurrencyCard(Currency currency){
-        mList.add(currency);
-        notifyItemInserted(mList.size() - 1);
+        for (int i = 0; i < mList.size(); i++) {
+            if (currency.getCType() == mList.get(i).getCType()) {
+                Toast.makeText(mContext, "Card already in existed", Toast.LENGTH_SHORT).show();
+            } else {
+                mList.add(currency);
+                notifyItemInserted(mList.size() - 1);
+            }
+        }
     }
 
     private void removeCurrencyCard(int position) throws IndexOutOfBoundsException{

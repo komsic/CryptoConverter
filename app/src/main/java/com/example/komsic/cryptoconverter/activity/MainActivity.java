@@ -47,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
+
         mAdapter = new CurrencyConversionAdapter(MainActivity.this);
-        
-		//btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
-        mItemResponse = new ItemResponse();
+        mItemResponse = mAdapter.getItemResponse();
+        btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
+
         fetchData();
 
         mRecyclerView.setAdapter(mAdapter);
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchData() {
+    public void fetchData() {
         RestApiService apiService = new RestApiClient().getClient().create(RestApiService.class);
         Call<ItemResponse> itemResponseCall = apiService.getItemResponse();
         itemResponseCall.enqueue(new Callback<ItemResponse>() {
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     mItemResponse = response.body();
                     btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
                     mAdapter.setItemResponse(mItemResponse);
+                    Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
                 }
             }
 

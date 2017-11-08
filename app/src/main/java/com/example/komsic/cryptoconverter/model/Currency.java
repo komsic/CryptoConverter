@@ -3,6 +3,8 @@ package com.example.komsic.cryptoconverter.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+
 /**
  * Created by komsic on 11/4/2017.
  */
@@ -80,39 +82,39 @@ public class Currency {
 	}
 
     private double convertFromCurrencyToBTC(double amount){
-        return amount * cType.currencyToBTCRate;
-    }
-
-    private double convertFromCurrencyToETH(double amount){
-        return amount * cType.currencyToETHRate;
-    }
-
-	private double convertFromBTCToCurrency(double amount){
 		double result = -1;
 		if(cType.currencyToBTCRate > 0){
 			result = amount / cType.currencyToBTCRate;
 		}
-		return result;
-	}
+		return roundUp(result, 7);
+    }
 
-	private double convertFromETHToCurrency(double amount){
+    private double convertFromCurrencyToETH(double amount){
 		double result = -1;
 		if(cType.currencyToETHRate > 0){
 			result = amount / cType.currencyToETHRate;
 		}
-		return result;
+		return roundUp(result, 4);
+    }
+
+	private double convertFromBTCToCurrency(double amount){
+		return roundUp((amount * cType.currencyToBTCRate), 2);
+	}
+
+	private double convertFromETHToCurrency(double amount){
+		return roundUp((amount * cType.currencyToETHRate), 2);
 	}
 	
 	private double convertFromBTCToETH(double amount){
+		return roundUp((amount * cType.bTCToETHRate), 2);
+	}
+	
+	private double convertFromETHToBTC(double amount){
 		double result = -1;
 		if(cType.bTCToETHRate > 0){
 			result = amount / cType.bTCToETHRate;
 		}
-		return result;
-	}
-	
-	private double convertFromETHToBTC(double amount){
-		return amount * cType.bTCToETHRate;
+		return roundUp(result, 4);
 	}
 
 	public double[] convert(String cType, double amountTobeConverted){
@@ -134,5 +136,11 @@ public class Currency {
 				convertedResults[ETH] = convertFromCurrencyToETH(amountTobeConverted);
 		}
 		return convertedResults;
+	}
+
+	public static double roundUp(double amount, int decimalPlace) {
+		BigDecimal bigDecimal = new BigDecimal(Double.toString(amount));
+		bigDecimal = bigDecimal.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+		return bigDecimal.doubleValue();
 	}
 }

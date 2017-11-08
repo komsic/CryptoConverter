@@ -71,6 +71,8 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 		} catch(Exception e){
 			if (edtInput.isEmpty()){
 				Toast.makeText(this, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_SHORT).show();
 			}
 		}
     }
