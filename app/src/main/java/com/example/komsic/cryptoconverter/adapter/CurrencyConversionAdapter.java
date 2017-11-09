@@ -126,6 +126,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
         if (cardAlreadyExist != false) {
             Toast.makeText(mContext, "Card Already in Existed", Toast.LENGTH_SHORT).show();
+
         } else {
             mList.add(currency);
             notifyItemInserted(mList.size() - 1);

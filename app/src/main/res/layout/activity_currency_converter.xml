@@ -17,15 +17,15 @@
         android:layout_weight="1"
         app:cardCornerRadius="4dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal">
 
                 <Spinner
@@ -44,14 +44,18 @@
 
             </LinearLayout>
 
-            <Button
-                android:layout_marginTop="16dp"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:onClick="convert"
-                android:text="convert"/>
+                android:background="@drawable/convert_button_background"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:text="CONVERT"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

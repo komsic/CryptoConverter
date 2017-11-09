@@ -23,15 +23,16 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="16dp"
 		android:orientation="horizontal">
 
 		<TextView
 			android:id="@+id/cancel_txt"
 			android:layout_width="0dp"
 			android:layout_weight="1"
+			android:padding="12dp"
 			android:layout_height="wrap_content"
 			android:text="Cancel"
+			android:background="@drawable/button_background"
 			android:gravity="center"
 			android:layout_gravity="center"
 			android:textAppearance="?android:textAppearanceLarge"/>
@@ -42,6 +43,8 @@
 			android:layout_weight="1"
 			android:layout_height="wrap_content"
 			android:text="Create"
+			android:padding="12dp"
+			android:background="@drawable/button_background_2"
 			android:gravity="center"
 			android:layout_gravity="center"
 			android:textAppearance="?android:textAppearanceLarge"/>

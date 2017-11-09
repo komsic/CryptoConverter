@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-	
-
 		
         btcToEthRateTV = (TextView) findViewById(R.id.btc_to_eth_rate_tv);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
