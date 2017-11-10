@@ -7,14 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.adapter.CurrencyConversionAdapter;
+import com.example.komsic.cryptoconverter.helper.DialogError;
 import com.example.komsic.cryptoconverter.helper.DialogNewCard;
 import com.example.komsic.cryptoconverter.model.Currency;
 import com.example.komsic.cryptoconverter.model.ItemResponse;
@@ -116,15 +117,29 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<ItemResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error Processing Request",
                         Toast.LENGTH_SHORT).show();
+                displayErrorDialog("Error Fetching Data." +
+                        "\nPlease Check Your Data Network." +
+                        "\nAnd Try Again");
             }
         });
     }
 
     public void create(Currency.CurrencyType currencyType) {
         if (mAdapter != null) {
-            mAdapter.addCurrencyCard(new Currency(currencyType));
-        } else {
-            Toast.makeText(this, "Cant Create Card", Toast.LENGTH_SHORT).show();
+            Currency newCurrencyCard = new Currency(currencyType);
+            if (newCurrencyCard.isCardAvailableForConversion()) {
+                mAdapter.addCurrencyCard(newCurrencyCard);
+            } else {
+                displayErrorDialog("Oops!!! Seems like you cannot create this card " +
+                        "until you fetch data");
+            }
+
         }
+    }
+
+    private void displayErrorDialog(String errorMessage) {
+        DialogError dialog = new DialogError();
+        dialog.setErrorMessage(errorMessage);
+        dialog.show(getFragmentManager(), "123");
     }
 }

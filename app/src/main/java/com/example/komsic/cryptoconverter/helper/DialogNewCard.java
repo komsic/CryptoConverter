@@ -19,13 +19,11 @@ import com.example.komsic.cryptoconverter.model.Currency;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DialogNewCard extends DialogFragment
-{
+public class DialogNewCard extends DialogFragment {
 	private Currency.CurrencyType mCurrencyType;
 
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState)
-	{
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View dialogView = inflater.inflate(R.layout.dialog_create_new_card, null);
@@ -59,26 +57,25 @@ public class DialogNewCard extends DialogFragment
 		builder.setView(dialogView).setMessage("Create a New Currency Card");
 
 		cancelTxt.setOnClickListener(new View.OnClickListener(){
-				@Override
-				public void onClick(View v){
-					dismiss();
-				}
-			});
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
 		createTxt.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				MainActivity callingActivity = (MainActivity) getActivity();
+				callingActivity.create(mCurrencyType);
 
-				@Override
-				public void onClick(View v){
-					MainActivity callingActivity = (MainActivity) getActivity();
-					callingActivity.create(mCurrencyType);
-
-					dismiss();
-				}
-			});
+				dismiss();
+			}
+		});
 		return builder.create();
 	}
 
-	Currency.CurrencyType get(Currency.CurrencyType currencyType) {
+	private Currency.CurrencyType get(Currency.CurrencyType currencyType) {
 		mCurrencyType = currencyType;
 		return mCurrencyType;
 	}

@@ -10,27 +10,14 @@ import java.math.BigDecimal;
  */
 
 public class Currency {
-    private CurrencyType cType;
-
 	public static final int CURRENT_CURRENCY = 0;
 	public static final int BTC = 1;
 	public static final int ETH = 2;
-	
     private static final String JSON_CURRENCY_TYPE = "Currency Type";
     private static final String JSON_CURRENCY_TO_BTC_RATE = "Currency To BTC Rate";
     private static final String JSON_CURRENCY_TO_ETH_RATE = "Currency To ETH Rate";
 	private static final String JSON_BTC_TO_ETH_RATE = "BTC To ETH Rate";
-
-    public enum CurrencyType{
-        ETH(), USD(), CAD(), EUR(), GBP(), CNY(),
-        CHF(), AUD(), JPY(), SEK(), MXN(), NZD(),
-        SGD(), HKD(), NOK(), TRY(), RUB(), ZAR(),
-        BRL(), MYR(), NGN();
-
-        private double currencyToBTCRate;
-        private double currencyToETHRate;
-		private double bTCToETHRate;
-    }
+    private CurrencyType cType;
 
     public Currency(CurrencyType currencyType) {
         this.cType = currencyType;
@@ -41,7 +28,13 @@ public class Currency {
         cType = Currency.CurrencyType.valueOf(cTypeString);
         cType.currencyToBTCRate = json.getDouble(JSON_CURRENCY_TO_BTC_RATE);
         cType.currencyToETHRate = json.getDouble(JSON_CURRENCY_TO_ETH_RATE);
-		cType.bTCToETHRate = json.getDouble(JSON_BTC_TO_ETH_RATE);
+        cType.eTHToBTCRate = json.getDouble(JSON_BTC_TO_ETH_RATE);
+    }
+
+    private static double roundUp(double amount, int decimalPlace) {
+        BigDecimal bigDecimal = new BigDecimal(Double.toString(amount));
+        bigDecimal = bigDecimal.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bigDecimal.doubleValue();
     }
 
     public JSONObject convertToJSON() throws JSONException {
@@ -50,7 +43,7 @@ public class Currency {
         jsonObject.put(JSON_CURRENCY_TYPE, cType);
         jsonObject.put(JSON_CURRENCY_TO_BTC_RATE, cType.currencyToBTCRate);
         jsonObject.put(JSON_CURRENCY_TO_ETH_RATE, cType.currencyToETHRate);
-		jsonObject.put(JSON_BTC_TO_ETH_RATE, cType.bTCToETHRate);
+        jsonObject.put(JSON_BTC_TO_ETH_RATE, cType.eTHToBTCRate);
 
         return jsonObject;
     }
@@ -64,7 +57,19 @@ public class Currency {
     public void onChangeRatesValue(ItemResponse itemResponse){
         cType.currencyToBTCRate = itemResponse.getBTC().getRate(cType);
         cType.currencyToETHRate = itemResponse.getETH().getRate(cType);
-		cType.bTCToETHRate = itemResponse.getBTC().getETH();
+        cType.eTHToBTCRate = itemResponse.getBTC().getETH();
+    }
+
+    public boolean isCardAvailableForConversion() {
+        boolean isAvailable = true;
+
+        if (getCurrencyToBTCRate() == 0
+                || getCurrencyToETHRate() == 0
+                || getETHToBTCRate() == 0) {
+            isAvailable = false;
+        }
+
+        return isAvailable;
     }
 
     public double getCurrencyToBTCRate()
@@ -78,8 +83,8 @@ public class Currency {
     }
 
 	public double getETHToBTCRate(){
-		return cType.bTCToETHRate;
-	}
+        return cType.eTHToBTCRate;
+    }
 
     private double convertFromCurrencyToBTC(double amount){
 		double result = -1;
@@ -106,14 +111,14 @@ public class Currency {
 	}
 	
 	private double convertFromBTCToETH(double amount){
-		return roundUp((amount * cType.bTCToETHRate), 2);
-	}
+        return roundUp((amount * cType.eTHToBTCRate), 2);
+    }
 	
 	private double convertFromETHToBTC(double amount){
 		double result = -1;
-		if(cType.bTCToETHRate > 0){
-			result = amount / cType.bTCToETHRate;
-		}
+        if (cType.eTHToBTCRate > 0) {
+            result = amount / cType.eTHToBTCRate;
+        }
 		return roundUp(result, 4);
 	}
 
@@ -138,9 +143,14 @@ public class Currency {
 		return convertedResults;
 	}
 
-	public static double roundUp(double amount, int decimalPlace) {
-		BigDecimal bigDecimal = new BigDecimal(Double.toString(amount));
-		bigDecimal = bigDecimal.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bigDecimal.doubleValue();
-	}
+    public enum CurrencyType {
+        ETH(), USD(), CAD(), EUR(), GBP(), CNY(),
+        CHF(), AUD(), JPY(), SEK(), MXN(), NZD(),
+        SGD(), HKD(), NOK(), TRY(), RUB(), ZAR(),
+        BRL(), MYR(), NGN();
+
+        private double currencyToBTCRate;
+        private double currencyToETHRate;
+        private double eTHToBTCRate;
+    }
 }
