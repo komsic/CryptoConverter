@@ -25,14 +25,18 @@ import com.example.komsic.cryptoconverter.service.RestApiService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.view.animation.*;
 
 
 public class MainActivity extends AppCompatActivity {
 
+	private Animation loadingAnimation;
     private CurrencyConversionAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private TextView btcToEthRateTV;
+	private View loadingView;
     private ItemResponse mItemResponse;
+	private boolean isDataFetchedSuccessfully;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 		
+		isDataFetchedSuccessfully = false;
+	
+		loadingView = findViewById(R.id.loading_view);
+		
         btcToEthRateTV = (TextView) findViewById(R.id.btc_to_eth_rate_tv);
+		
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
@@ -100,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchData() {
+		startLoadingAnimation();
+		
         RestApiService apiService = new RestApiClient().getClient().create(RestApiService.class);
         Call<ItemResponse> itemResponseCall = apiService.getItemResponse();
         itemResponseCall.enqueue(new Callback<ItemResponse>() {
@@ -110,13 +121,16 @@ public class MainActivity extends AppCompatActivity {
                     btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
                     mAdapter.setItemResponse(mItemResponse);
                     Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
+					isDataFetchedSuccessfully = true;
+					stopLoadingAnimation();
                 }
             }
 
             @Override
             public void onFailure(Call<ItemResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error Processing Request",
-                        Toast.LENGTH_SHORT).show();
+                
+				stopLoadingAnimation();
+				isDataFetchedSuccessfully = false;
                 displayErrorDialog("Error Fetching Data." +
                         "\nPlease Check Your Data Network." +
                         "\nAnd Try Again");
@@ -124,10 +138,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+	private void stopLoadingAnimation(){
+		loadingView.setVisibility(View.GONE);
+		loadingView.clearAnimation();
+		loadingAnimation.cancel();
+	}
+	
+	private void startLoadingAnimation(){
+		loadingView.setVisibility(View.VISIBLE);
+		loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.loading);
+		loadingAnimation.setDuration(500);
+		loadingView.startAnimation(loadingAnimation);
+	}
+
     public void create(Currency.CurrencyType currencyType) {
         if (mAdapter != null) {
             Currency newCurrencyCard = new Currency(currencyType);
-            if (newCurrencyCard.isCardAvailableForConversion()) {
+            if (isDataFetchedSuccessfully == true) {
                 mAdapter.addCurrencyCard(newCurrencyCard);
             } else {
                 displayErrorDialog("Oops!!! Seems like you cannot create this card " +

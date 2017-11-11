@@ -31,8 +31,8 @@ public class DialogError extends DialogFragment {
 
         builder.setView(dialogView).setMessage("Error!!!!");
 
-        errorMessageTxt.setText(getErrorMessage());
 
+        errorMessageTxt.setText(getErrorMessage());
         fetctTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -92,14 +92,18 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.btcCurrentCurrencyNameRate.setText(btcToCurrentCurrencyRate);
         holder.ethCurrentCurrencyNameRate.setText(ethToCurrentCurrencyRate);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
-                intent.putExtra("currencyName", currencyName);
-                mContext.startActivity(intent);
-            }
-        });
+        if (currency.isCardAvailableForConversion() == true){
+			holder.itemView.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
+						intent.putExtra("currencyName", currencyName);
+						mContext.startActivity(intent);
+					}
+				});
+		} else {
+			Toast.makeText(mContext, "You Need To Fetch Data To Enable Conversion For This Card", Toast.LENGTH_SHORT).show();
+		}
 
         holder.deleteCurrencyCard.setOnClickListener(new View.OnClickListener() {
             @Override
