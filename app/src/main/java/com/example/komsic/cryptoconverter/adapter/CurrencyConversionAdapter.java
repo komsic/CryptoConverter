@@ -37,7 +37,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         mSerializer = new JSONSerializer("CurrencyList.json", mContext);
         try {
             mList = mSerializer.load();
-            Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show();
+            
 			if(mList.size() > 0){
 				// TODO 2nd edit
 				for (int i = 0; i < mList.size(); i++){
@@ -102,7 +102,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 					}
 				});
 		} else {
-			Toast.makeText(mContext, "You Need To Fetch Data To Enable Conversion For This Card", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getString(R.string.enable_conversion), Toast.LENGTH_SHORT).show();
 		}
 
         holder.deleteCurrencyCard.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
 
         if (cardAlreadyExist != false) {
-            Toast.makeText(mContext, "Card Already in Existed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.card_exist), Toast.LENGTH_SHORT).show();
 
         } else {
             mList.add(currency);

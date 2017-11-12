@@ -54,7 +54,7 @@ public class DialogNewCard extends DialogFragment {
 		final TextView cancelTxt = (TextView) dialogView.findViewById(R.id.cancel_txt);
 
 
-		builder.setView(dialogView).setMessage("Create a New Currency Card");
+		builder.setView(dialogView).setMessage(getString(R.string.new_currency));
 
 		cancelTxt.setOnClickListener(new View.OnClickListener(){
 			@Override

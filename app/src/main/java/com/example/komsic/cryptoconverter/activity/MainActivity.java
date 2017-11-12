@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.adapter.CurrencyConversionAdapter;
@@ -120,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                     mItemResponse = response.body();
                     btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
                     mAdapter.setItemResponse(mItemResponse);
-                    Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
 					isDataFetchedSuccessfully = true;
 					stopLoadingAnimation();
                 }
@@ -128,12 +126,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ItemResponse> call, Throwable t) {
-                
 				stopLoadingAnimation();
 				isDataFetchedSuccessfully = false;
-                displayErrorDialog("Error Fetching Data." +
-                        "\nPlease Check Your Data Network." +
-                        "\nAnd Try Again");
+                displayErrorDialog(getString(R.string.error_fetching_data));
             }
         });
     }
@@ -157,8 +152,7 @@ public class MainActivity extends AppCompatActivity {
             if (isDataFetchedSuccessfully == true) {
                 mAdapter.addCurrencyCard(newCurrencyCard);
             } else {
-                displayErrorDialog("Oops!!! Seems like you cannot create this card " +
-                        "until you fetch data");
+                displayErrorDialog(getString(R.id.fetch_data_first));
             }
 
         }

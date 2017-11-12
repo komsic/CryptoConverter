@@ -29,7 +29,7 @@ public class DialogError extends DialogFragment {
         TextView fetctTxt = (TextView) dialogView.findViewById(R.id.fetch_txt);
         TextView cancelTxt = (TextView) dialogView.findViewById(R.id.dialog_error_cancel_txt);
 
-        builder.setView(dialogView).setMessage("Error!!!!");
+        builder.setView(dialogView).setMessage(getString(R.string.error));
 
 
         errorMessageTxt.setText(getErrorMessage());

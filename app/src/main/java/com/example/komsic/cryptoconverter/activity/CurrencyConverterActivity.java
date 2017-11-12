@@ -42,7 +42,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 
 		mCurrentCurrencyNameTxt.setText(selectedCurrencyName);
 
-		String[] spinnerArray = {selectedCurrencyName, "BTC", "ETH"};
+		String[] spinnerArray = {selectedCurrencyName, getString(R.string.btc), getString(R.string.eth)};
 		mConverterSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
 				spinnerArray));
 
@@ -66,13 +66,13 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 				mBTCResultTxt.setText(String.valueOf(convertedAmount[Currency.BTC]));
 				mETHResultTxt.setText(String.valueOf(convertedAmount[Currency.ETH]));
 			} else {
-				Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.valid_amount), Toast.LENGTH_SHORT).show();
 			}
 		} catch(Exception e){
 			if (edtInput.isEmpty()){
-				Toast.makeText(this, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.empty_field), Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.valid_amount), Toast.LENGTH_SHORT).show();
 			}
 		}
     }
