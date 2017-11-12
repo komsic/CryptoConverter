@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
@@ -24,7 +26,6 @@ import com.example.komsic.cryptoconverter.service.RestApiService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import android.view.animation.*;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             if (isDataFetchedSuccessfully == true) {
                 mAdapter.addCurrencyCard(newCurrencyCard);
             } else {
-                displayErrorDialog(getString(R.id.fetch_data_first));
+                displayErrorDialog(getString(R.string.fetch_data_first));
             }
 
         }

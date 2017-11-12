@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.model.Currency;
+import com.example.komsic.cryptoconverter.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +46,7 @@ public class JSONSerializer {
             Writer writer = null;
             try {
                 OutputStream outputStream = mContext.openFileOutput(mFileName,
-                        mContext.MODE_PRIVATE);
+                        Context.MODE_PRIVATE);
                 writer = new OutputStreamWriter(outputStream);
                 writer.write(jsonArray.toString());
             } finally {
@@ -72,7 +73,7 @@ public class JSONSerializer {
                 currencyArrayList.add(new Currency(jsonArray.getJSONObject(i)));
             }
         } catch (FileNotFoundException e) {
-            Toast.makeText(mContext, mContext.getString(R.id.file_not_found), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, mContext.getString(R.string.file_not_found), Toast.LENGTH_SHORT).show();
         } finally {
             if (reader != null) {
                 reader.close();

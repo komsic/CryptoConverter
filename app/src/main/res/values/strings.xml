@@ -22,6 +22,38 @@
 	<string name="cancel">Cancel</string>
 	<string name="create">Create</string>
 	<string name="warning">Warning!!!</string>
-	<string name="continue">Continue</string>
+	<string name="continue_txt">Continue</string>
 	<string name="fetch">Fetch</string>
+	<string name="about"><b>CryptoConverter</b>\n
+
+		This app was written as an entry test to ALC intermediate Android challenge.\n
+
+		<b>About The App</b>\n
+
+		The app shows the exchange rate between BTC and ETH. It also allows the creation of currency cards which show the exchange rate between the selected currency and the cryptocurrencies. Clicking on each card will go to a conversion page where amount could be specified in BTC, ETH, or the selected currency. The specified amount will be converted to BTC, ETH, and the selected currency. The exchange rate data is fetch from CryptoCompare.\n
+
+		<b>Supported Currencies</b>\n
+
+		The app supports the following currencies:\n
+
+		\t• USD - US Dollar\n
+		\t• CAD - Canadian Dollar\n
+		\t• EUR - Euro\n
+		\t• GBP - British Pound\n
+		\t• CNY - Chinese Yuan\n
+		\t• CHF - Swiss Franc\n
+		\t• AUD - Australian Dollar\n
+		\t• JPY - Japanese Yen\n
+		\t• SEK - Swedish Krona\n
+		\t• MXN - Mexican Peso\n
+		\t• NZD - New Zealand Dollar\n
+		\t• SGD - Singapore Dollar\n
+		\t• HKD - Hong Kong Dollar\n
+		\t• NOK - Norwegian Krone\n
+		\t• TRY - Turkish Lira\n
+		\t• RUB - Russian Ruble\n
+		\t• ZAR - South African Rand\n
+		\t• BRL - Brazilian Real\n
+		\t• MYR - Malaysian Ringgit\n
+		\t• NGN - Nigerian Naira\n</string>
 </resources>

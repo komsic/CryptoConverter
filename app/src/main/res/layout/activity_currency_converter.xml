@@ -40,20 +40,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_amount"
-					android:inputType="phone"/>
+                    android:inputType="phone"/>
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:onClick="convert"
                 android:background="@drawable/convert_button_background"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:text="@string/convert"/>
+                android:onClick="convert"
+                android:padding="12dp"
+                android:text="@string/convert"
+                android:textAppearance="?android:textAppearanceLarge"/>
 
         </RelativeLayout>
 
