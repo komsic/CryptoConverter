@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Warning!!!"
+            android:text="@string/warning"
             android:textAppearance="?android:textAppearanceLarge"/>
 
     </LinearLayout>
@@ -56,7 +56,7 @@
             android:background="@drawable/button_background"
             android:gravity="center"
             android:padding="12dp"
-            android:text="Continue"
+            android:text="@string/continue"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/colorAccent"/>
 
@@ -69,7 +69,7 @@
             android:background="@drawable/button_background_2"
             android:gravity="center"
             android:padding="12dp"
-            android:text="Fetch"
+            android:text="@string/fetch"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/colorAccent"/>
 

@@ -20,8 +20,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.os.Build.VERSION_CODES.N;
-
 /**
  * Created by komsic on 11/5/2017.
  */
@@ -74,7 +72,7 @@ public class JSONSerializer {
                 currencyArrayList.add(new Currency(jsonArray.getJSONObject(i)));
             }
         } catch (FileNotFoundException e) {
-            Toast.makeText(mContext, getString(R.id.file_not_found), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, mContext.getString(R.id.file_not_found), Toast.LENGTH_SHORT).show();
         } finally {
             if (reader != null) {
                 reader.close();

@@ -36,7 +36,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="BTC"
+                android:text="@string/btc"
                 android:textAppearance="?android:textAppearanceSmall"/>
 
             <ImageView
@@ -53,7 +53,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="NGN"
+                tools:text="NGN"
                 android:textAppearance="?android:textAppearanceSmall"/>
 
             <ImageView
@@ -88,7 +88,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="ETH"
+                android:text="@string/eth"
                 android:textAppearance="?android:textAppearanceSmall"/>
 
             <ImageView

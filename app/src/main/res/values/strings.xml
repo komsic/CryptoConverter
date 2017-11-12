@@ -16,4 +16,12 @@
 	<string name="error">Error!!!!</string>
 	<string name="new_currency">Create a New Currency Card</string>
 	<string name="file_not_found">File Not Found Or Created Yet</string>
+	<string name="enter_amount">Enter Amount Here</string>
+	<string name="convert">CONVERT</string>
+	<string name="choose_currency">Please a Choose Currency</string>
+	<string name="cancel">Cancel</string>
+	<string name="create">Create</string>
+	<string name="warning">Warning!!!</string>
+	<string name="continue">Continue</string>
+	<string name="fetch">Fetch</string>
 </resources>
