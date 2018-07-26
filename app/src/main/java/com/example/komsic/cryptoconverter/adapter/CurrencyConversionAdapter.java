@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 
 public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter
-        .CardViewHolder>{
+        .CardViewHolder> {
 
     private ArrayList<Currency> mList = new ArrayList<>();
     private Context mContext;
@@ -37,17 +37,17 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         mSerializer = new JSONSerializer("CurrencyList.json", mContext);
         try {
             mList = mSerializer.load();
-            
-			if(mList.size() > 0){
-				// TODO 2nd edit
-				for (int i = 0; i < mList.size(); i++){
-					Currency c = mList.get(i);
-					mItemResponse.getBTC().initialize(c.getCType(), c.getCurrencyToBTCRate());
-					mItemResponse.getETH().initialize(c.getCType(), c.getCurrencyToETHRate());
-					mItemResponse.getBTC().initialize(Currency.CurrencyType.ETH, c.getETHToBTCRate());
-					notifyDataSetChanged();
-				}
-			}
+
+            if (mList.size() > 0) {
+                // TODO 2nd edit
+                for (int i = 0; i < mList.size(); i++) {
+                    Currency c = mList.get(i);
+                    mItemResponse.getBTC().initialize(c.getCType(), c.getCurrencyToBTCRate());
+                    mItemResponse.getETH().initialize(c.getCType(), c.getCurrencyToETHRate());
+                    mItemResponse.getBTC().initialize(Currency.CurrencyType.ETH, c.getETHToBTCRate());
+                    notifyDataSetChanged();
+                }
+            }
         } catch (Exception e) {
             mList = new ArrayList<>();
             Log.e("Error Loading Currency:", "", e);
@@ -92,18 +92,18 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.btcCurrentCurrencyNameRate.setText(btcToCurrentCurrencyRate);
         holder.ethCurrentCurrencyNameRate.setText(ethToCurrentCurrencyRate);
 
-        if (currency.isCardAvailableForConversion() == true){
-			holder.itemView.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
-						intent.putExtra("currencyName", currencyName);
-						mContext.startActivity(intent);
-					}
-				});
-		} else {
-			Toast.makeText(mContext, getString(R.string.enable_conversion), Toast.LENGTH_SHORT).show();
-		}
+        if (currency.isCardAvailableForConversion() == true) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
+                    intent.putExtra("currencyName", currencyName);
+                    mContext.startActivity(intent);
+                }
+            });
+        } else {
+            Toast.makeText(mContext, mContext.getString(R.string.enable_conversion), Toast.LENGTH_SHORT).show();
+        }
 
         holder.deleteCurrencyCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +118,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         return mList.size();
     }
 
-    public void addCurrencyCard(Currency currency){
+    public void addCurrencyCard(Currency currency) {
         boolean cardAlreadyExist = false;
 
         for (int i = 0; i < mList.size(); i++) {
@@ -129,7 +129,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
 
         if (cardAlreadyExist != false) {
-            Toast.makeText(mContext, getString(R.string.card_exist), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, mContext.getString(R.string.card_exist), Toast.LENGTH_SHORT).show();
 
         } else {
             mList.add(currency);
@@ -137,7 +137,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
     }
 
-    private void removeCurrencyCard(int position) throws IndexOutOfBoundsException{
+    private void removeCurrencyCard(int position) throws IndexOutOfBoundsException {
         try {
             mList.remove(position);
             notifyItemRemoved(position);
@@ -146,7 +146,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
     }
 
-    public void removeAllCurrencyCards() throws IndexOutOfBoundsException{
+    public void removeAllCurrencyCards() throws IndexOutOfBoundsException {
         try {
             mList.clear();
             notifyDataSetChanged();
@@ -155,7 +155,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         }
     }
 
-    class CardViewHolder extends RecyclerView.ViewHolder{
+    class CardViewHolder extends RecyclerView.ViewHolder {
 
         TextView btcCurrentCurrencyName;
         TextView ethCurrentCurrencyName;

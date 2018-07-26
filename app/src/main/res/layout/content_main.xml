@@ -14,16 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/crypto_exchange_rate_layout"
-        tools:listitem="@layout/list_item_layout"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        tools:listitem="@layout/list_item_layout"/>
 
     <android.support.v7.widget.CardView
         android:id="@+id/crypto_exchange_rate_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:layout_below="@+id/loading_view"
-        android:layout_gravity="center"
+        android:layout_below="@+id/loading_view"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:layout_margin="4dp">
 
         <LinearLayout
@@ -34,52 +34,40 @@
             android:padding="24dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/btc"
-                android:layout_marginRight="8dp"
-                android:layout_marginEnd="8dp"
-                android:textAppearance="?android:textAppearanceMedium"/>
+                android:textAppearance="?android:textAppearanceMedium"
+                style="@style/indicator_image_style"/>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_compare_arrow"/>
+                android:src="@drawable/ic_compare_arrow"
+                style="@style/indicator_image_style"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/eth"
-                android:layout_marginRight="8dp"
-                android:layout_marginEnd="8dp"
-                android:textAppearance="?android:textAppearanceMedium"/>
+                android:textAppearance="?android:textAppearanceMedium"
+                style="@style/indicator_image_style"/>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_arrow_forward"/>
+                android:src="@drawable/ic_arrow_forward"
+                style="@style/indicator_image_style"/>
 
             <TextView
                 android:id="@+id/btc_to_eth_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="1500000"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="1500000"/>
 
         </LinearLayout>
-		
+
     </android.support.v7.widget.CardView>
 
-	<View
-		android:id="@+id/loading_view"
-		android:layout_width="match_parent"
-		android:layout_height="2dp"
-		android:background="#0000ff"
-		android:visibility="gone"/>
+    <View
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#0000ff"
+        android:visibility="gone"/>
 
 </RelativeLayout>

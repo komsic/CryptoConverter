@@ -1,10 +1,11 @@
 package com.example.komsic.cryptoconverter.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.komsic.cryptoconverter.R;
 
+// This is the 
 public class AboutActivity extends AppCompatActivity {
 
     @Override
