@@ -106,12 +106,4 @@
         </LinearLayout>
 
     </android.support.design.card.MaterialCardView>
-
-    <View
-        android:id="@+id/loading_view"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#0000ff"
-        android:visibility="gone"/>
-
 </RelativeLayout>

@@ -4,28 +4,20 @@ package com.example.komsic.cryptoconverter.helper;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.MainActivity;
-import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
-import com.example.komsic.cryptoconverter.data.service.model.Currency;
-import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DialogNewCard extends DialogFragment {
@@ -75,7 +67,7 @@ public class DialogNewCard extends DialogFragment {
 			@Override
 			public void onClick(View v) {
 				MainActivity callingActivity = (MainActivity) getActivity();
-				callingActivity.create(currencyType);
+                callingActivity.addCurrencyToList(currencyType);
 
 				dismiss();
 			}

@@ -1,7 +1,6 @@
 package com.example.komsic.cryptoconverter.activity;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,58 +21,37 @@ import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.adapter.CurrencyConversionAdapter;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
-import com.example.komsic.cryptoconverter.data.service.RestApiClient;
-import com.example.komsic.cryptoconverter.data.service.RestApiService;
 import com.example.komsic.cryptoconverter.helper.DialogError;
-import com.example.komsic.cryptoconverter.data.service.model.Currency;
-import com.example.komsic.cryptoconverter.data.service.model.ItemResponse;
 import com.example.komsic.cryptoconverter.helper.DialogNewCard;
 import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity implements CurrencyConversionAdapter.OnItemClicked{
 
     private static final String TAG = "MainActivity";
 
-	private Animation loadingAnimation;
     private CurrencyConversionAdapter mAdapter;
-    private RecyclerView mRecyclerView;
     private TextView btcToEthRateTV;
-	private View loadingView;
-    private ItemResponse mItemResponse;
-	private boolean isDataFetchedSuccessfully;
 	private CurrencyListViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-		
-		isDataFetchedSuccessfully = false;
-	
-		loadingView = findViewById(R.id.loading_view);
-		
-        btcToEthRateTV = (TextView) findViewById(R.id.btc_to_eth_rate_tv);
-		
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+
+        btcToEthRateTV = findViewById(R.id.btc_to_eth_rate_tv);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(manager);
 
         mAdapter = new CurrencyConversionAdapter(this);
-        mItemResponse = mAdapter.getItemResponse();
-        btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
 
-//        fetchData();
-
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
         mViewModel = ViewModelProviders.of(this).get(CurrencyListViewModel.class);
         mViewModel.getSelectedCurrencies().observe(this, new Observer<List<CurrencyCard>>() {
             @Override
@@ -104,11 +80,12 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
                 dialog.setUnselectedCards(currencyCardSubsets);
             }
         });
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show(getFragmentManager(), "123");
+
 //                Intent intent = new Intent(MainActivity.this, TestingActivity.class);
 //                startActivity(intent);
             }
@@ -133,20 +110,10 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
                 startActivity(intent);
                 return true;
             case R.id.action_clear_all:
-                if (mAdapter != null) {
-                    mAdapter.removeAllCurrencyCards();
-                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mAdapter != null) {
-            mAdapter.saveCurrencyCardsToMemory();
         }
     }
 
@@ -154,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
 		mViewModel.updateRates();
     }
 
-    public void create(String currencyType) {
+    public void addCurrencyToList(String currencyType) {
         mViewModel.updateSelectedStatus(currencyType, true);
-        Log.e(TAG, "create: " + currencyType);
+        Log.e(TAG, "addCurrencyToList: " + currencyType);
     }
 
     private void displayErrorDialog(String errorMessage) {
