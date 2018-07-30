@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.model;
+package com.example.komsic.cryptoconverter.data.service.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -13,11 +13,14 @@ import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
+import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.helper.JSONSerializer;
-import com.example.komsic.cryptoconverter.model.Currency;
-import com.example.komsic.cryptoconverter.model.ItemResponse;
+import com.example.komsic.cryptoconverter.data.service.model.Currency;
+import com.example.komsic.cryptoconverter.data.service.model.ItemResponse;
+import com.example.komsic.cryptoconverter.helper.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by komsic on 11/4/2017.
@@ -26,13 +29,20 @@ import java.util.ArrayList;
 public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter
         .CardViewHolder> {
 
+    public interface OnItemClicked {
+        void onItemClicked(CurrencyCard card);
+    }
+
     private ArrayList<Currency> mList = new ArrayList<>();
+    private List<CurrencyCard> mCurrenciesList;
     private Context mContext;
     private ItemResponse mItemResponse;
     private JSONSerializer mSerializer;
+    private OnItemClicked mClicked;
 
     public CurrencyConversionAdapter(Context context) {
         mContext = context;
+        mClicked = (OnItemClicked) context;
         mItemResponse = new ItemResponse();
         mSerializer = new JSONSerializer("CurrencyList.json", mContext);
         try {
@@ -59,6 +69,11 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         notifyDataSetChanged();
     }
 
+    public void setCurrenciesList(List<CurrencyCard> cards) {
+        mCurrenciesList = cards;
+        notifyDataSetChanged();
+    }
+
     public ItemResponse getItemResponse() {
         return mItemResponse;
     }
@@ -80,42 +95,49 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     @Override
     public void onBindViewHolder(final CardViewHolder holder, int position) {
-        Currency currency = mList.get(position);
-        currency.onChangeRatesValue(mItemResponse);
 
-        final String currencyName = currency.getCType().name();
-        final String btcToCurrentCurrencyRate = String.valueOf(currency.getCurrencyToBTCRate());
-        final String ethToCurrentCurrencyRate = String.valueOf(currency.getCurrencyToETHRate());
+        final CurrencyCard currencyCard = mCurrenciesList.get(position);
 
-        holder.btcCurrentCurrencyName.setText(currencyName);
-        holder.ethCurrentCurrencyName.setText(currencyName);
-        holder.btcCurrentCurrencyNameRate.setText(btcToCurrentCurrencyRate);
-        holder.ethCurrentCurrencyNameRate.setText(ethToCurrentCurrencyRate);
 
-        if (currency.isCardAvailableForConversion() == true) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
-                    intent.putExtra("currencyName", currencyName);
-                    mContext.startActivity(intent);
-                }
-            });
-        } else {
-            Toast.makeText(mContext, mContext.getString(R.string.enable_conversion), Toast.LENGTH_SHORT).show();
-        }
+        final String currencyType = currencyCard.currencyType;
+        final double btcToCurrentCurrencyRate = (currencyCard.btcRate);
+        final double ethToCurrentCurrencyRate = (currencyCard.ethRate);
 
-        holder.deleteCurrencyCard.setOnClickListener(new View.OnClickListener() {
+        holder.btcCurrentCurrencyNameRate.setText(Util.formatMoney(currencyType,
+                btcToCurrentCurrencyRate));
+        holder.ethCurrentCurrencyNameRate.setText(Util.formatMoney(currencyType,
+                ethToCurrentCurrencyRate));
+
+        Context context = holder.btcCurrentCurrencyNameRate.getContext();
+        int imageId = context.getResources().getIdentifier(currencyCard.imageAsset, "drawable",
+                context.getPackageName());
+        holder.logoImage.setImageResource(imageId);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                removeCurrencyCard(holder.getAdapterPosition());
+            public void onClick(View view) {
+                currencyCard.selectedStatus = !currencyCard.selectedStatus;
+                mClicked.onItemClicked(currencyCard);
             }
         });
+
+//        if (currency.isCardAvailableForConversion()) {
+//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(mContext, CurrencyConverterActivity.class);
+//                    intent.putExtra("currencyName", currencyName);
+//                    mContext.startActivity(intent);
+//                }
+//            });
+//        } else {
+//            Toast.makeText(mContext, mContext.getString(R.string.enable_conversion), Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mCurrenciesList == null ? 0 : mCurrenciesList.size();
     }
 
     public void addCurrencyCard(Currency currency) {
@@ -157,23 +179,18 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     class CardViewHolder extends RecyclerView.ViewHolder {
 
-        TextView btcCurrentCurrencyName;
-        TextView ethCurrentCurrencyName;
         TextView btcCurrentCurrencyNameRate;
         TextView ethCurrentCurrencyNameRate;
-        ImageView deleteCurrencyCard;
+        ImageView logoImage;
 
         CardViewHolder(View itemView) {
             super(itemView);
-            btcCurrentCurrencyName = (TextView) itemView.findViewById(R.id
-                    .btc_to_current_currency_tv);
-            ethCurrentCurrencyName = (TextView) itemView.findViewById(R.id
-                    .eth_to_current_currency_tv);
+
             btcCurrentCurrencyNameRate = (TextView) itemView.findViewById(R.id
                     .btc_to_current_currency_rate_tv);
             ethCurrentCurrencyNameRate = (TextView) itemView.findViewById(R.id
                     .eth_to_current_currency_rate_tv);
-            deleteCurrencyCard = (ImageView) itemView.findViewById(R.id.delete_img);
+            logoImage = (ImageView) itemView.findViewById(R.id.logo);
         }
     }
 }

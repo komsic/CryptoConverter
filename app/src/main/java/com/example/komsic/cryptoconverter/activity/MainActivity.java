@@ -1,34 +1,47 @@
 package com.example.komsic.cryptoconverter.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.adapter.CurrencyConversionAdapter;
+import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
+import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
+import com.example.komsic.cryptoconverter.data.service.RestApiClient;
+import com.example.komsic.cryptoconverter.data.service.RestApiService;
 import com.example.komsic.cryptoconverter.helper.DialogError;
+import com.example.komsic.cryptoconverter.data.service.model.Currency;
+import com.example.komsic.cryptoconverter.data.service.model.ItemResponse;
 import com.example.komsic.cryptoconverter.helper.DialogNewCard;
-import com.example.komsic.cryptoconverter.model.Currency;
-import com.example.komsic.cryptoconverter.model.ItemResponse;
-import com.example.komsic.cryptoconverter.service.RestApiClient;
-import com.example.komsic.cryptoconverter.service.RestApiService;
+import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CurrencyConversionAdapter.OnItemClicked{
+
+    private static final String TAG = "MainActivity";
 
 	private Animation loadingAnimation;
     private CurrencyConversionAdapter mAdapter;
@@ -37,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 	private View loadingView;
     private ItemResponse mItemResponse;
 	private boolean isDataFetchedSuccessfully;
+	private CurrencyListViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +69,48 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
 
-        mAdapter = new CurrencyConversionAdapter(MainActivity.this);
+        mAdapter = new CurrencyConversionAdapter(this);
         mItemResponse = mAdapter.getItemResponse();
         btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
 
-        fetchData();
+//        fetchData();
 
         mRecyclerView.setAdapter(mAdapter);
+        mViewModel = ViewModelProviders.of(this).get(CurrencyListViewModel.class);
+        mViewModel.getSelectedCurrencies().observe(this, new Observer<List<CurrencyCard>>() {
+            @Override
+            public void onChanged(@Nullable List<CurrencyCard> currencyCards) {
+                if (currencyCards != null && currencyCards.size() > 0) {
+                    btcToEthRateTV.setText(String.valueOf(currencyCards.get(0).btcRate));
+                    currencyCards.remove(0);
+                    mAdapter.setCurrenciesList(currencyCards);
+                }
+            }
+        });
+        mViewModel.getRemoteDataFetchingStatus().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean status) {
+                if (status != null && !status) {
+                    displayErrorDialog(getString(R.string.error_fetching_data));
+                }
+            }
+        });
 
+        final DialogNewCard dialog = new DialogNewCard();
+        dialog.init(this);
+        mViewModel.getUnselectedCurrencies().observe(this, new Observer<List<CurrencyCardSubset>>() {
+            @Override
+            public void onChanged(@Nullable List<CurrencyCardSubset> currencyCardSubsets) {
+                dialog.setUnselectedCards(currencyCardSubsets);
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogNewCard dialog = new DialogNewCard();
                 dialog.show(getFragmentManager(), "123");
+//                Intent intent = new Intent(MainActivity.this, TestingActivity.class);
+//                startActivity(intent);
             }
         });
     }
@@ -109,59 +151,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchData() {
-		startLoadingAnimation();
-		
-        RestApiService apiService = new RestApiClient().getClient().create(RestApiService.class);
-        Call<ItemResponse> itemResponseCall = apiService.getItemResponse();
-        itemResponseCall.enqueue(new Callback<ItemResponse>() {
-            @Override
-            public void onResponse(Call<ItemResponse> call, Response<ItemResponse> response) {
-                if(response.isSuccessful()){
-                    mItemResponse = response.body();
-                    btcToEthRateTV.setText(String.valueOf(mItemResponse.getBTC().getETH()));
-                    mAdapter.setItemResponse(mItemResponse);
-					isDataFetchedSuccessfully = true;
-					stopLoadingAnimation();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ItemResponse> call, Throwable t) {
-				stopLoadingAnimation();
-				isDataFetchedSuccessfully = false;
-                displayErrorDialog(getString(R.string.error_fetching_data));
-            }
-        });
+		mViewModel.updateRates();
     }
 
-	private void stopLoadingAnimation(){
-		loadingView.setVisibility(View.GONE);
-		loadingView.clearAnimation();
-		loadingAnimation.cancel();
-	}
-	
-	private void startLoadingAnimation(){
-		loadingView.setVisibility(View.VISIBLE);
-		loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.loading);
-		loadingAnimation.setDuration(500);
-		loadingView.startAnimation(loadingAnimation);
-	}
-
-    public void create(Currency.CurrencyType currencyType) {
-        if (mAdapter != null) {
-            Currency newCurrencyCard = new Currency(currencyType);
-            if (isDataFetchedSuccessfully == true) {
-                mAdapter.addCurrencyCard(newCurrencyCard);
-            } else {
-                displayErrorDialog(getString(R.string.fetch_data_first));
-            }
-
-        }
+    public void create(String currencyType) {
+        mViewModel.updateSelectedStatus(currencyType, true);
+        Log.e(TAG, "create: " + currencyType);
     }
 
     private void displayErrorDialog(String errorMessage) {
         DialogError dialog = new DialogError();
         dialog.setErrorMessage(errorMessage);
         dialog.show(getFragmentManager(), "123");
+    }
+
+    @Override
+    public void onItemClicked(CurrencyCard card) {
+        Toast.makeText(this, card.toString(), Toast.LENGTH_SHORT).show();
+        mViewModel.updateSelectedStatus(card.currencyType, false);
     }
 }

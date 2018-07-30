@@ -3,7 +3,7 @@ package com.example.komsic.cryptoconverter.helper;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.komsic.cryptoconverter.model.Currency;
+import com.example.komsic.cryptoconverter.data.service.model.Currency;
 import com.example.komsic.cryptoconverter.R;
 
 import org.json.JSONArray;

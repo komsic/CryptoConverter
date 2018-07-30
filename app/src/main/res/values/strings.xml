@@ -3,28 +3,28 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_clear_all">Clear All Cards</string>
     <string name="action_about">About</string>
-	<string name="btc">BTC</string>
-	<string name="eth">ETH</string>
-	<string name="error_fetching_data">Error Fetching Data.
+    <string name="btc">BTC</string>
+    <string name="eth">ETH</string>
+    <string name="error_fetching_data">Error Fetching Data.
 		\nPlease Check Your Data Network.
 		\nAnd Try Again</string>
-	<string name="fetch_data_first">Oops!!! Seems like you cannot create this card until you fetch data</string>
-	<string name="enable_conversion">You Need To Fetch Data To Enable Conversion For This Card</string>
-	<string name="card_exist">Card Already in Existed</string>
-	<string name="valid_amount">Enter a valid amount</string>
-	<string name="empty_field">"Field cannot be empty"</string>
-	<string name="error">Error!!!!</string>
-	<string name="new_currency">Create a New Currency Card</string>
-	<string name="file_not_found">File Not Found Or Created Yet</string>
-	<string name="enter_amount">Enter Amount Here</string>
-	<string name="convert">CONVERT</string>
-	<string name="choose_currency">Please a Choose Currency</string>
-	<string name="cancel">Cancel</string>
-	<string name="create">Create</string>
-	<string name="warning">Warning!!!</string>
-	<string name="continue_txt">Continue</string>
-	<string name="fetch">Fetch</string>
-	<string name="about"><b>CryptoConverter</b>\n
+    <string name="fetch_data_first">Oops!!! Seems like you cannot create this card until you fetch data</string>
+    <string name="enable_conversion">You Need To Fetch Data To Enable Conversion For This Card</string>
+    <string name="card_exist">Card Already in Existed</string>
+    <string name="valid_amount">Enter a valid amount</string>
+    <string name="empty_field">"Field cannot be empty"</string>
+    <string name="error">Error!!!!</string>
+    <string name="new_currency">Create a New Currency Card</string>
+    <string name="file_not_found">File Not Found Or Created Yet</string>
+    <string name="enter_amount">Enter Amount Here</string>
+    <string name="convert">CONVERT</string>
+    <string name="choose_currency">Please a Choose Currency</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="warning">Warning!!!</string>
+    <string name="continue_txt">Continue</string>
+    <string name="fetch">Fetch</string>
+    <string name="about"><b>CryptoConverter</b>\n
 
 		This app was written as an entry test to ALC intermediate Android challenge.\n
 

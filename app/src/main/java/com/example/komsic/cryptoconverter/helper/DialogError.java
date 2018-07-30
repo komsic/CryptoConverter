@@ -27,7 +27,7 @@ public class DialogError extends DialogFragment {
         View dialogView = inflater.inflate(R.layout.dialog_fetch_error, null);
 
         TextView errorMessageTxt = (TextView) dialogView.findViewById(R.id.error_message_txt);
-        TextView fetctTxt = (TextView) dialogView.findViewById(R.id.fetch_txt);
+        TextView fetchTxt = (TextView) dialogView.findViewById(R.id.fetch_txt);
         TextView cancelTxt = (TextView) dialogView.findViewById(R.id.dialog_error_cancel_txt);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -36,7 +36,7 @@ public class DialogError extends DialogFragment {
 
 
         errorMessageTxt.setText(getErrorMessage());
-        fetctTxt.setOnClickListener(new View.OnClickListener() {
+        fetchTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).fetchData();

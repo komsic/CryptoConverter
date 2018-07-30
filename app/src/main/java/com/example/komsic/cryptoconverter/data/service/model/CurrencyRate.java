@@ -1,15 +1,42 @@
-package com.example.komsic.cryptoconverter.model;
+package com.example.komsic.cryptoconverter.data.service.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import static com.example.komsic.cryptoconverter.model.Currency.CurrencyType.GBP;
 
 /**
  * Created by komsic on 11/4/2017.
  */
 
 public class CurrencyRate {
+    public CurrencyRate() {
+    }
+
+    public CurrencyRate(double eTH, double uSD, double cAD, double eUR, double gBP, double cNY,
+                        double cHF, double aUD, double jPY, double sEK, double XN, double nZD,
+                        double sGD, double hKD, double nOK, double tRY, double rUB, double zAR,
+                        double bRL, double YR, double nGN) {
+        this.eTH = eTH;
+        this.uSD = uSD;
+        this.cAD = cAD;
+        this.eUR = eUR;
+        this.gBP = gBP;
+        this.cNY = cNY;
+        this.cHF = cHF;
+        this.aUD = aUD;
+        this.jPY = jPY;
+        this.sEK = sEK;
+        mXN = XN;
+        this.nZD = nZD;
+        this.sGD = sGD;
+        this.hKD = hKD;
+        this.nOK = nOK;
+        this.tRY = tRY;
+        this.rUB = rUB;
+        this.zAR = zAR;
+        this.bRL = bRL;
+        mYR = YR;
+        this.nGN = nGN;
+    }
 
     @SerializedName("ETH")
     @Expose
@@ -261,6 +288,79 @@ public class CurrencyRate {
 
     public void setnGN(double nGN) {
         this.nGN = nGN;
+    }
+
+    public double getRate(String cType) {
+        double amount;
+        switch(cType){
+            case "ETH":
+                amount = getETH();
+                break;
+            case "USD":
+                amount = getUSD();
+                break;
+            case "CAD":
+                amount = getCAD();
+                break;
+            case "EUR":
+                amount = getEUR();
+                break;
+            case "GBP":
+                amount = getGBP();
+                break;
+            case "CNY":
+                amount = getCNY();
+                break;
+            case "CHF":
+                amount = getCHF();
+                break;
+            case "AUD":
+                amount = getAUD();
+                break;
+            case "JPY":
+                amount = getJPY();
+                break;
+            case "SEK":
+                amount = getSEK();
+                break;
+            case "MXN":
+                amount = getMXN();
+                break;
+            case "NZD":
+                amount = getNZD();
+                break;
+            case "SGD":
+                amount = getSGD();
+                break;
+            case "HKD":
+                amount = getHKD();
+                break;
+            case "NOK":
+                amount = getNOK();
+                break;
+            case "TRY":
+                amount = getTRY();
+                break;
+            case "RUB":
+                amount = getRUB();
+                break;
+            case "ZAR":
+                amount = getZAR();
+                break;
+            case "BRL":
+                amount = getBRL();
+                break;
+            case "MYR":
+                amount = getMYR();
+                break;
+            case "NGN":
+                amount = getNGN();
+                break;
+            default:
+                amount = -1;
+                break;
+        }
+        return amount;
     }
 
     public double getRate(Currency.CurrencyType cType) {

@@ -4,70 +4,78 @@ package com.example.komsic.cryptoconverter.helper;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.activity.MainActivity;
-import com.example.komsic.cryptoconverter.model.Currency;
+import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
+import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
+import com.example.komsic.cryptoconverter.data.service.model.Currency;
+import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class DialogNewCard extends DialogFragment {
-	private Currency.CurrencyType mCurrencyType;
+	private String currencyType;
+	private Spinner mSpinner;
+	private ArrayAdapter<String> mAdapter;
 
-	@Override
+    @Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View dialogView = inflater.inflate(R.layout.dialog_create_new_card, null);
 
-		ArrayList<Currency.CurrencyType> cType = new ArrayList<>();
-		cType.addAll(Arrays.asList(Currency.CurrencyType.values()));
-		cType.remove(0);
-
-        final Spinner spinner = (Spinner) dialogView.findViewById(R.id
+		mSpinner = (Spinner) dialogView.findViewById(R.id
 				.dialog_currency_chooser_spinner);
-		spinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
-				cType));
-		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-										   int position, long id) {
-					Currency.CurrencyType currencyType = (Currency.CurrencyType)
-							spinner.getSelectedItem();
-					get(currencyType);
-				}
 
-				@Override
-				public void onNothingSelected(AdapterView<?> parentView) {
-				}
-			});
+        mSpinner.setAdapter(mAdapter);
+
+		mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+									   int position, long id) {
+
+				String cur = (String) mSpinner.getSelectedItem();
+				currencyType = cur.substring(0, 3);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+			}
+		});
 
 		final TextView createTxt = (TextView) dialogView.findViewById(R.id.create_txt);
 		final TextView cancelTxt = (TextView) dialogView.findViewById(R.id.cancel_txt);
 
 
-		builder.setView(dialogView).setMessage(getContext().getString(R.string.new_currency));
+		builder.setView(dialogView).setMessage(getActivity().getString(R.string.new_currency));
 
-		cancelTxt.setOnClickListener(new View.OnClickListener(){
+		cancelTxt.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				dismiss();
 			}
 		});
 
-		createTxt.setOnClickListener(new View.OnClickListener(){
+		createTxt.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				MainActivity callingActivity = (MainActivity) getActivity();
-				callingActivity.create(mCurrencyType);
+				callingActivity.create(currencyType);
 
 				dismiss();
 			}
@@ -75,8 +83,20 @@ public class DialogNewCard extends DialogFragment {
 		return builder.create();
 	}
 
-	private Currency.CurrencyType get(Currency.CurrencyType currencyType) {
-		mCurrencyType = currencyType;
-		return mCurrencyType;
+    public void init(Context context) {
+        mAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,
+                new ArrayList<String>());
+    }
+
+	public void setUnselectedCards(List<CurrencyCardSubset> unselectedCards) {
+		ArrayList<String> unselectedCardsString = new ArrayList<>();
+		for (CurrencyCardSubset currencyCardSubset : unselectedCards) {
+			unselectedCardsString.add(currencyCardSubset.currencyType + " - "
+					+ currencyCardSubset.currencyName);
+		}
+
+		mAdapter.clear();
+		mAdapter.addAll(unselectedCardsString);
+		mAdapter.notifyDataSetChanged();
 	}
 }

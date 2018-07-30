@@ -17,51 +17,95 @@
         android:visibility="visible"
         tools:listitem="@layout/list_item_layout"/>
 
-    <android.support.v7.widget.CardView
+
+    <android.support.design.card.MaterialCardView
         android:id="@+id/crypto_exchange_rate_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/loading_view"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_margin="4dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardCornerRadius="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:padding="24dp">
+            android:gravity="center"
+            android:padding="8dp">
 
-            <TextView
-                android:text="@string/btc"
-                android:textAppearance="?android:textAppearanceMedium"
-                style="@style/indicator_image_style"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bitcoin"
+                    android:padding="12dp"
+                    android:background="@drawable/circle_background1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:text="@string/btc"/>
+
+            </LinearLayout>
 
             <ImageView
-                android:src="@drawable/ic_compare_arrow"
-                style="@style/indicator_image_style"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_compare_arrows_black_24dp"
+                android:layout_marginEnd="8dp"/>
 
-            <TextView
-                android:text="@string/eth"
-                android:textAppearance="?android:textAppearanceMedium"
-                style="@style/indicator_image_style"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_ethereum"
+                    android:padding="12dp"
+                    android:background="@drawable/circle_background1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:text="@string/eth"/>
+            </LinearLayout>
 
             <ImageView
-                android:src="@drawable/ic_arrow_forward"
-                style="@style/indicator_image_style"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_arrow_forward_black_24dp"
+                android:layout_marginEnd="8dp"/>
 
             <TextView
                 android:id="@+id/btc_to_eth_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textStyle="bold"
-                tools:text="1500000"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:text="16.63"/>
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </android.support.design.card.MaterialCardView>
 
     <View
         android:id="@+id/loading_view"

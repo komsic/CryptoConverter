@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.model;
+package com.example.komsic.cryptoconverter.data.service.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -22,8 +22,21 @@ public class ItemResponse {
         eTH = new CurrencyRate();
     }
 
+    public ItemResponse(CurrencyRate bTC, CurrencyRate eTH) {
+        this.bTC = bTC;
+        this.eTH = eTH;
+    }
+
     public CurrencyRate getBTC() {
         return bTC;
+    }
+
+    public double getBTC(String currencyType) {
+        return bTC.getRate(currencyType);
+    }
+
+    public double getETH(String currencyType) {
+        return eTH.getRate(currencyType);
     }
 
     public  CurrencyRate getETH() {

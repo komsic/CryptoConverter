@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
-import com.example.komsic.cryptoconverter.model.Currency;
+import com.example.komsic.cryptoconverter.data.service.model.Currency;
 
 public class CurrencyConverterActivity extends AppCompatActivity {
     private Spinner mConverterSpinner;

@@ -1,0 +1,172 @@
+{
+  "currencies": [
+    {
+      "currencyType": "ETH",
+      "currencyName": "Ethereum",
+      "ethRate": 0,
+      "imageAsset": "ic_ethereum",
+      "btcRate": 0,
+      "selectedStatus": true
+    },
+    {
+      "currencyType": "USD",
+      "currencyName": "US Dollar",
+      "ethRate": 0,
+      "imageAsset": "ic_us_dollar",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "CAD",
+      "currencyName": "Canadian Dollar",
+      "ethRate": 0,
+      "imageAsset": "ic_canadian_dollar",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "EUR",
+      "currencyName": "Euro",
+      "ethRate": 0,
+      "imageAsset": "ic_euro",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "GBP",
+      "currencyName": "Great Britain Pound",
+      "ethRate": 0,
+      "imageAsset": "ic_great_britain_pound",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "CNY",
+      "currencyName": "Chinese Yuan",
+      "ethRate": 0,
+      "imageAsset": "ic_yuan",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "CHF",
+      "currencyName": "Swiss Franc",
+      "ethRate": 0,
+      "imageAsset": "ic_swiss_franc",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "AUD",
+      "currencyName": "Australian Dollar",
+      "ethRate": 0,
+      "imageAsset": "ic_us_dollar",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "JPY",
+      "currencyName": "Japanese Yen",
+      "ethRate": 0,
+      "imageAsset": "ic_yen",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "SEK",
+      "currencyName": "Swedish Krone",
+      "ethRate": 0,
+      "imageAsset": "ic_krone",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "MXN",
+      "currencyName": "Mexican Peso",
+      "ethRate": 0,
+      "imageAsset": "ic_mexican_peso",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "NZD",
+      "currencyName": "New Zealand Dollar",
+      "ethRate": 0,
+      "imageAsset": "ic_new_zealand_dollar",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "SGD",
+      "currencyName": "Singapore Dollar",
+      "ethRate": 0,
+      "imageAsset": "ic_singapore_dollar",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "HKD",
+      "currencyName": "Hong Kong Dollar",
+      "ethRate": 0,
+      "imageAsset": "ic_hong_kong_dollar",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "NOK",
+      "currencyName": "Norway Krone",
+      "ethRate": 0,
+      "imageAsset": "ic_krone",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "TRY",
+      "currencyName": "Turkish Lira",
+      "ethRate": 0,
+      "imageAsset": "ic_turkish_lira",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "RUB",
+      "currencyName": "Russian Ruble",
+      "ethRate": 0,
+      "imageAsset": "ic_russian_ruble",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "ZAR",
+      "currencyName": "South African Rand",
+      "ethRate": 0,
+      "imageAsset": "ic_south_african_rand",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "BRL",
+      "currencyName": "Brazilian Real",
+      "ethRate": 0,
+      "imageAsset": "ic_brazilian_real",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "MYR",
+      "currencyName": "Malaysian Ringgit",
+      "ethRate": 0,
+      "imageAsset": "ic_malaysian_ringgit",
+      "btcRate": 0,
+      "selectedStatus": false
+    },
+    {
+      "currencyType": "NGN",
+      "currencyName": "Nigerian Naira",
+      "ethRate": 0,
+      "imageAsset": "ic_nigerian_naira",
+      "btcRate": 0,
+      "selectedStatus": false
+    }
+  ]
+}
