@@ -1,6 +1,9 @@
 package com.example.komsic.cryptoconverter.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,46 +14,56 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
-import com.example.komsic.cryptoconverter.data.service.model.Currency;
+import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
+import com.example.komsic.cryptoconverter.data.service.model.CurrencyConverter;
+import com.example.komsic.cryptoconverter.viewmodel.CurrencyDetailViewModel;
 
 public class CurrencyConverterActivity extends AppCompatActivity {
     private Spinner mConverterSpinner;
     private EditText mConvertEdt;
     private LinearLayout mResultLayout;
-    private TextView mCurrentCurrencyNameTxt;
     private TextView mCurrentCurrencyResultTxt;
     private TextView mBTCResultTxt;
     private TextView mETHResultTxt;
 
-    private String selectedCurrencyName;
+    private String selectedCurrencyType;
+    private CurrencyCard mCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_converter);
 
-        mConverterSpinner = (Spinner) findViewById(R.id.convert_spinner);
-        mConvertEdt = (EditText) findViewById(R.id.convert_edt);
-        mResultLayout = (LinearLayout) findViewById(R.id.conversion_result_layout);
-        mCurrentCurrencyNameTxt = (TextView) findViewById(R.id.current_currency_name_tv);
-        mCurrentCurrencyResultTxt = (TextView) findViewById(R.id.current_currency_result_tv);
-        mBTCResultTxt = (TextView) findViewById(R.id.btc_currency_result_tv);
-        mETHResultTxt = (TextView) findViewById(R.id.eth_currency_result_tv);
+        mConverterSpinner = findViewById(R.id.convert_spinner);
+        mConvertEdt = findViewById(R.id.convert_edt);
+        mResultLayout = findViewById(R.id.conversion_result_layout);
+        TextView currentCurrencyNameTxt = findViewById(R.id.current_currency_name_tv);
+        mCurrentCurrencyResultTxt = findViewById(R.id.current_currency_result_tv);
+        mBTCResultTxt = findViewById(R.id.btc_currency_result_tv);
+        mETHResultTxt = findViewById(R.id.eth_currency_result_tv);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
             finish();
         } else {
-            selectedCurrencyName = bundle.getString("currencyName");
+            selectedCurrencyType = bundle.getString("currencyName");
         }
 
-        mCurrentCurrencyNameTxt.setText(selectedCurrencyName);
+        CurrencyDetailViewModel viewModel = ViewModelProviders.of(this)
+                .get(CurrencyDetailViewModel.class);
+        viewModel.getCurrencyCard(selectedCurrencyType).observe(this,
+                new Observer<CurrencyCard>() {
+                    @Override
+                    public void onChanged(@Nullable CurrencyCard card) {
+                        mCard = card;
+                    }
+                });
 
-        String[] spinnerArray = {selectedCurrencyName, getString(R.string.btc), getString(R.string.eth)};
-        mConverterSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-                spinnerArray));
+        currentCurrencyNameTxt.setText(selectedCurrencyType);
 
-        getSupportActionBar().setTitle(selectedCurrencyName);
+        String[] spinnerArray = {selectedCurrencyType, getString(R.string.btc), getString(R.string.eth)};
+        mConverterSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, spinnerArray));
     }
 
     // TODO Remember to set conversion_result_layout visible
@@ -59,16 +72,18 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         try {
             double amountTobeConverted = Double.parseDouble(edtInput);
             if (amountTobeConverted > 0.0) {
+                String selectedCurrencyToBeConverted = (String) mConverterSpinner.getSelectedItem();
+                CurrencyConverter currencyConverter = new CurrencyConverter(mCard);
                 double[] convertedAmount =
-                        (new Currency(Currency.CurrencyType.valueOf(selectedCurrencyName)))
-                                .convert(mConverterSpinner.getSelectedItem().toString(),
-                                        amountTobeConverted);
+                        currencyConverter.convert((selectedCurrencyToBeConverted != null ?
+                                        selectedCurrencyToBeConverted : mCard.currencyType),
+                                amountTobeConverted);
 
                 mResultLayout.setVisibility(View.VISIBLE);
                 mCurrentCurrencyResultTxt.setText(String
-                        .valueOf(convertedAmount[Currency.CURRENT_CURRENCY]));
-                mBTCResultTxt.setText(String.valueOf(convertedAmount[Currency.BTC]));
-                mETHResultTxt.setText(String.valueOf(convertedAmount[Currency.ETH]));
+                        .valueOf(convertedAmount[CurrencyConverter.CURRENT_CURRENCY]));
+                mBTCResultTxt.setText(String.valueOf(convertedAmount[CurrencyConverter.BTC]));
+                mETHResultTxt.setText(String.valueOf(convertedAmount[CurrencyConverter.ETH]));
             } else {
                 Toast.makeText(this, getString(R.string.valid_amount), Toast.LENGTH_SHORT).show();
             }

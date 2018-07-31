@@ -27,6 +27,9 @@ public interface CurrencyCardDao {
     @Query("SELECT * FROM currency_table")
     List<CurrencyCard> getAllCards();
 
+    @Query("SELECT * FROM currency_table WHERE currencyType = :currencyType")
+    LiveData<CurrencyCard> getCardByType(String currencyType);
+
     @Query("UPDATE currency_table " +
             "SET btcRate = :btcRate," +
             "ethRate = :ethRate " +

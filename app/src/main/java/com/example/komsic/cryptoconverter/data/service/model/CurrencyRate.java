@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class CurrencyRate {
-    public CurrencyRate() {
+    CurrencyRate() {
     }
 
     public CurrencyRate(double eTH, double uSD, double cAD, double eUR, double gBP, double cNY,
@@ -122,7 +122,7 @@ public class CurrencyRate {
     @Expose
     private double nGN;
 
-    public double getETH() {
+    private double getETH() {
         return eTH;
     }
 
@@ -206,90 +206,6 @@ public class CurrencyRate {
         return nGN;
     }
 
-    public void seteTH(double eTH) {
-        this.eTH = eTH;
-    }
-
-    public void setuSD(double uSD) {
-        this.uSD = uSD;
-    }
-
-    public void setcAD(double cAD) {
-        this.cAD = cAD;
-    }
-
-    public void seteUR(double eUR) {
-        this.eUR = eUR;
-    }
-
-    public void setgBP(double gBP) {
-        this.gBP = gBP;
-    }
-
-    public void setcNY(double cNY) {
-        this.cNY = cNY;
-    }
-
-    public void setcHF(double cHF) {
-        this.cHF = cHF;
-    }
-
-    public void setaUD(double aUD) {
-        this.aUD = aUD;
-    }
-
-    public void setjPY(double jPY) {
-        this.jPY = jPY;
-    }
-
-    public void setsEK(double sEK) {
-        this.sEK = sEK;
-    }
-
-    public void setXN(double XN) {
-        mXN = XN;
-    }
-
-    public void setnZD(double nZD) {
-        this.nZD = nZD;
-    }
-
-    public void setsGD(double sGD) {
-        this.sGD = sGD;
-    }
-
-    public void sethKD(double hKD) {
-        this.hKD = hKD;
-    }
-
-    public void setnOK(double nOK) {
-        this.nOK = nOK;
-    }
-
-    public void settRY(double tRY) {
-        this.tRY = tRY;
-    }
-
-    public void setrUB(double rUB) {
-        this.rUB = rUB;
-    }
-
-    public void setzAR(double zAR) {
-        this.zAR = zAR;
-    }
-
-    public void setbRL(double bRL) {
-        this.bRL = bRL;
-    }
-
-    public void setYR(double YR) {
-        mYR = YR;
-    }
-
-    public void setnGN(double nGN) {
-        this.nGN = nGN;
-    }
-
     public double getRate(String cType) {
         double amount;
         switch(cType){
@@ -361,146 +277,5 @@ public class CurrencyRate {
                 break;
         }
         return amount;
-    }
-
-    public double getRate(Currency.CurrencyType cType) {
-        double amount;
-        switch(cType){
-            case ETH:
-                amount = getETH();
-                break;
-            case USD:
-                amount = getUSD();
-                break;
-            case CAD:
-                amount = getCAD();
-                break;
-            case EUR:
-                amount = getEUR();
-                break;
-            case GBP:
-                amount = getGBP();
-                break;
-            case CNY:
-                amount = getCNY();
-                break;
-            case CHF:
-                amount = getCHF();
-                break;
-            case AUD:
-                amount = getAUD();
-                break;
-            case JPY:
-                amount = getJPY();
-                break;
-            case SEK:
-                amount = getSEK();
-                break;
-            case MXN:
-                amount = getMXN();
-                break;
-            case NZD:
-                amount = getNZD();
-                break;
-            case SGD:
-                amount = getSGD();
-                break;
-            case HKD:
-                amount = getHKD();
-                break;
-            case NOK:
-                amount = getNOK();
-                break;
-            case TRY:
-                amount = getTRY();
-                break;
-            case RUB:
-                amount = getRUB();
-                break;
-            case ZAR:
-                amount = getZAR();
-                break;
-            case BRL:
-                amount = getBRL();
-                break;
-            case MYR:
-                amount = getMYR();
-                break;
-            case NGN:
-                amount = getNGN();
-                break;
-            default:
-                amount = -1;
-                break;
-        }
-        return amount;
-    }
-
-    public void initialize(Currency.CurrencyType cType, double d) {
-        switch(cType){
-            case ETH:
-                seteTH(d);
-                break;
-            case USD:
-                setuSD(d);
-                break;
-            case CAD:
-                setcAD(d);
-                break;
-            case EUR:
-                seteUR(d);
-                break;
-            case GBP:
-                setgBP(d); 
-				break;
-            case CNY: 
-				setcNY(d);
-                break;
-            case CHF:
-                setcHF(d);
-                break;
-            case AUD:
-                setaUD(d);
-                break;
-            case JPY:
-                setjPY(d);
-                break;
-            case SEK:
-                setsEK(d);
-                break;
-            case MXN:
-                setXN(d);
-                break;
-            case NZD:
-                setnZD(d);
-                break;
-            case SGD:
-                setsGD(d);
-                break;
-            case HKD:
-                sethKD(d);
-                break;
-            case NOK:
-                setnOK(d);
-                break;
-            case TRY:
-                settRY(d);
-                break;
-            case RUB:
-                setrUB(d);
-                break;
-            case ZAR:
-                setzAR(d);
-                break;
-            case BRL:
-                setbRL(d);
-                break;
-            case MYR:
-                setYR(d);
-                break;
-            case NGN:
-                setnGN(d);
-                break;
-        }
     }
 }

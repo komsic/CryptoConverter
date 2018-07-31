@@ -1,6 +1,7 @@
 package com.example.komsic.cryptoconverter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
+import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.helper.Util;
 
@@ -22,19 +24,16 @@ import java.util.List;
 public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter
         .CardViewHolder> {
 
+    public void setCurrenciesList(List<CurrencyCard> cards) {
+        mCurrenciesList = cards;
+        notifyDataSetChanged();
+    }
+
     private List<CurrencyCard> mCurrenciesList;
     private OnItemClicked mClicked;
 
     public CurrencyConversionAdapter(Context context) {
         mClicked = (OnItemClicked) context;
-    }
-
-    @NonNull
-    @Override
-    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_layout,
-                parent, false);
-        return new CardViewHolder(itemView);
     }
 
     @Override
@@ -60,20 +59,31 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currencyCard.selectedStatus = !currencyCard.selectedStatus;
-                mClicked.onItemClicked(currencyCard);
+//                currencyCard.selectedStatus = !currencyCard.selectedStatus;
+//                mClicked.onItemClicked(currencyCard);
+
+                Intent intent = new Intent(view.getContext(), CurrencyConverterActivity.class);
+                intent.putExtra("currencyName", currencyType);
+                view.getContext().startActivity(intent);
             }
         });
+    }
+
+    @NonNull
+    @Override
+    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_layout,
+                parent, false);
+        return new CardViewHolder(itemView);
+    }
+
+    public CurrencyCard getCard(int position) {
+        return mCurrenciesList.get(position);
     }
 
     @Override
     public int getItemCount() {
         return mCurrenciesList == null ? 0 : mCurrenciesList.size();
-    }
-
-    public void setCurrenciesList(List<CurrencyCard> cards) {
-        mCurrenciesList = cards;
-        notifyDataSetChanged();
     }
 
     public interface OnItemClicked {

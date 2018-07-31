@@ -43,6 +43,10 @@ public class CurrencyRepository {
         return sCurrencyRepository;
     }
 
+    public LiveData<CurrencyCard> getCurrencyCard(String currencyType) {
+        return mDao.getCardByType(currencyType);
+    }
+
     public LiveData<List<CurrencyCard>> getSelectedCard() {
         return mSelectedCard;
     }

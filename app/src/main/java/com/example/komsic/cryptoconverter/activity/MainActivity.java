@@ -4,12 +4,15 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
 
     private CurrencyConversionAdapter mAdapter;
     private TextView btcToEthRateTV;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 	private CurrencyListViewModel mViewModel;
 
     @Override
@@ -44,14 +48,20 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
         setSupportActionBar(toolbar);
 
         btcToEthRateTV = findViewById(R.id.btc_to_eth_rate_tv);
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchData();
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-
         mAdapter = new CurrencyConversionAdapter(this);
-
         recyclerView.setAdapter(mAdapter);
+
         mViewModel = ViewModelProviders.of(this).get(CurrencyListViewModel.class);
         mViewModel.getSelectedCurrencies().observe(this, new Observer<List<CurrencyCard>>() {
             @Override
@@ -63,9 +73,29 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
                 }
             }
         });
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                int position = viewHolder.getAdapterPosition();
+                CurrencyCard card = mAdapter.getCard(position);
+
+                mViewModel.updateSelectedStatus(card.currencyType, !card.selectedStatus);
+            }
+        });
+        helper.attachToRecyclerView(recyclerView);
+
         mViewModel.getRemoteDataFetchingStatus().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean status) {
+                mSwipeRefreshLayout.setRefreshing(false);
                 if (status != null && !status) {
                     displayErrorDialog(getString(R.string.error_fetching_data));
                 }
@@ -103,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
+                mSwipeRefreshLayout.setRefreshing(true);
                 fetchData();
                 return true;
             case R.id.action_about:

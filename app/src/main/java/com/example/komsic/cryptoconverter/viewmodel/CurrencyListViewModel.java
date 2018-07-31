@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.komsic.cryptoconverter.data.CurrencyRepository;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
@@ -19,7 +18,6 @@ public class CurrencyListViewModel extends AndroidViewModel {
     private CurrencyRepository mRepository;
     private LiveData<List<CurrencyCard>> mSelectedCurrencies;
     private LiveData<List<CurrencyCardSubset>> mUnselectedCurrencies;
-    private MutableLiveData<Boolean> mRemoteDataFetchingStatus;
 
     public CurrencyListViewModel(@NonNull Application application) {
         super(application);
@@ -27,7 +25,6 @@ public class CurrencyListViewModel extends AndroidViewModel {
         mRepository = CurrencyRepository.getInstance(application);
         mSelectedCurrencies = mRepository.getSelectedCard();
         mUnselectedCurrencies = mRepository.getUnselectedCard();
-        mRemoteDataFetchingStatus = CurrencyRepository.getRemoteDataFetchingStatus();
     }
 
     public LiveData<List<CurrencyCard>> getSelectedCurrencies() {
@@ -39,7 +36,7 @@ public class CurrencyListViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<Boolean> getRemoteDataFetchingStatus() {
-        return mRemoteDataFetchingStatus;
+        return CurrencyRepository.getRemoteDataFetchingStatus();
     }
 
     public void updateRates() {
