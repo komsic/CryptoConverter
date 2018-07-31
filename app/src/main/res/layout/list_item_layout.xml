@@ -9,7 +9,7 @@
     app:cardPreventCornerOverlap="true"
     app:cardCornerRadius="4dp"
     android:layout_margin="4dp"
-    tools:context=".activity.TestingActivity">
+    tools:context=".view.ui.TestingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

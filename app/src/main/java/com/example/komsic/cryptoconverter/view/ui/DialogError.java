@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.helper;
+package com.example.komsic.cryptoconverter.view.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
-import com.example.komsic.cryptoconverter.activity.MainActivity;
 
 /**
  * Created by komsic on 11/10/2017.

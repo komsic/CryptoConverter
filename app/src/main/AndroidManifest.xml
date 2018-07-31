@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.ui.MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -25,24 +25,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".view.ui.AboutActivity"
             android:configChanges="orientation"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".view.ui.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value=".view.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.CurrencyConverterActivity"
+            android:name=".view.ui.CurrencyConverterActivity"
             android:configChanges="orientation"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".view.ui.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value=".view.ui.MainActivity" />
         </activity>
-        <activity android:name=".activity.TestingActivity"></activity>
+        <activity android:name=".view.ui.TestingActivity"></activity>
     </application>
 
 </manifest>

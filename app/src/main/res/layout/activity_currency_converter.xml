@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity">
+    tools:context="com.example.komsic.cryptoconverter.view.ui.CurrencyConverterActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

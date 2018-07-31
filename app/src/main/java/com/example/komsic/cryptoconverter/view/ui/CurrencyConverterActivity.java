@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.activity;
+package com.example.komsic.cryptoconverter.view.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
+import com.example.komsic.cryptoconverter.data.CurrencyConverter;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
-import com.example.komsic.cryptoconverter.data.service.model.CurrencyConverter;
 import com.example.komsic.cryptoconverter.viewmodel.CurrencyDetailViewModel;
 
 public class CurrencyConverterActivity extends AppCompatActivity {

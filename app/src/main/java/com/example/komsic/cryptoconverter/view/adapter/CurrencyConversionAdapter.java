@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.adapter;
+package com.example.komsic.cryptoconverter.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
-import com.example.komsic.cryptoconverter.activity.CurrencyConverterActivity;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.helper.Util;
+import com.example.komsic.cryptoconverter.view.ui.CurrencyConverterActivity;
 
 import java.util.List;
 
@@ -21,8 +21,7 @@ import java.util.List;
  * Created by komsic on 11/4/2017.
  */
 
-public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter
-        .CardViewHolder> {
+public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter.CardViewHolder> {
 
     public void setCurrenciesList(List<CurrencyCard> cards) {
         mCurrenciesList = cards;

@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.helper;
+package com.example.komsic.cryptoconverter.view.ui;
 
 
 import android.app.AlertDialog;
@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
-import com.example.komsic.cryptoconverter.activity.MainActivity;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
 
 import java.util.ArrayList;

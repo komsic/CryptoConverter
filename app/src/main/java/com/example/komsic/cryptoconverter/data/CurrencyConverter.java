@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.data.service.model;
+package com.example.komsic.cryptoconverter.data;
 
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 

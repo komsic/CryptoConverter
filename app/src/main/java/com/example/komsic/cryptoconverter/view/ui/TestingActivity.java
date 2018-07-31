@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.activity;
+package com.example.komsic.cryptoconverter.view.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
