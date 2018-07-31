@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
@@ -29,7 +28,7 @@ import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements CurrencyConversionAdapter.OnItemClicked{
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
         RecyclerView recyclerView = findViewById(R.id.recycler);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        mAdapter = new CurrencyConversionAdapter(this);
+        mAdapter = new CurrencyConversionAdapter();
         recyclerView.setAdapter(mAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(CurrencyListViewModel.class);
@@ -159,11 +158,5 @@ public class MainActivity extends AppCompatActivity implements CurrencyConversio
         DialogError dialog = new DialogError();
         dialog.setErrorMessage(errorMessage);
         dialog.show(getFragmentManager(), "123");
-    }
-
-    @Override
-    public void onItemClicked(CurrencyCard card) {
-        Toast.makeText(this, card.toString(), Toast.LENGTH_SHORT).show();
-        mViewModel.updateSelectedStatus(card.currencyType, false);
     }
 }

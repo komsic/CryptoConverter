@@ -23,17 +23,7 @@ import java.util.List;
 
 public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConversionAdapter.CardViewHolder> {
 
-    public void setCurrenciesList(List<CurrencyCard> cards) {
-        mCurrenciesList = cards;
-        notifyDataSetChanged();
-    }
-
     private List<CurrencyCard> mCurrenciesList;
-    private OnItemClicked mClicked;
-
-    public CurrencyConversionAdapter(Context context) {
-        mClicked = (OnItemClicked) context;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewHolder holder, int position) {
@@ -58,8 +48,6 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                currencyCard.selectedStatus = !currencyCard.selectedStatus;
-//                mClicked.onItemClicked(currencyCard);
 
                 Intent intent = new Intent(view.getContext(), CurrencyConverterActivity.class);
                 intent.putExtra("currencyName", currencyType);
@@ -85,8 +73,9 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         return mCurrenciesList == null ? 0 : mCurrenciesList.size();
     }
 
-    public interface OnItemClicked {
-        void onItemClicked(CurrencyCard card);
+    public void setCurrenciesList(List<CurrencyCard> cards) {
+        mCurrenciesList = cards;
+        notifyDataSetChanged();
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
