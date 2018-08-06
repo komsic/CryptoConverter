@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardDao;
@@ -41,6 +40,12 @@ public class CurrencyRepository {
         }
 
         return sCurrencyRepository;
+    }
+
+    public double[] getConvertedAmount(CurrencyCard card, String selectedCurrencyToBeConverted,
+                                       double amountTobeConverted) {
+        CurrencyConverter currencyConverter = new CurrencyConverter(card);
+        return currencyConverter.convert(selectedCurrencyToBeConverted, amountTobeConverted);
     }
 
     public LiveData<CurrencyCard> getCurrencyCard(String currencyType) {
@@ -88,14 +93,11 @@ public class CurrencyRepository {
 
         @Override
         public void onDataLoadedSuccess(ItemResponse itemResponse) {
-            Log.e(TAG, "updateDbWithRemote: mRemote.fetchData() is" + (itemResponse == null ? "null" : "not null") );
-            Log.e(TAG, "updateDbWithRemote: cards is" + (cards == null ? "null" : "not null") );
             if (itemResponse != null && cards != null) {
                 for (CurrencyCard card : cards) {
                     card.btcRate = itemResponse.getBTC(card.currencyType);
                     card.ethRate = itemResponse.getETH(card.currencyType);
 
-                    Log.e(TAG, "updateDbWithRemote: " + card.toString());
                     new updateRatesAsyncTask(mAsyncTaskDao).execute(card);
                 }
             }

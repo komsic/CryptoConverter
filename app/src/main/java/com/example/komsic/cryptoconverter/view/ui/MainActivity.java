@@ -1,7 +1,10 @@
 package com.example.komsic.cryptoconverter.view.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.R;
+import com.example.komsic.cryptoconverter.SyncCurrencyService;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
 import com.example.komsic.cryptoconverter.view.adapter.CurrencyConversionAdapter;
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView btcToEthRateTV;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 	private CurrencyListViewModel mViewModel;
+    private AlarmManager mAlarmManager;
+    private PendingIntent mSyncPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, SyncCurrencyService.class);
+        mSyncPendingIntent = PendingIntent.getService(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
 
         btcToEthRateTV = findViewById(R.id.btc_to_eth_rate_tv);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
@@ -112,11 +127,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show(getFragmentManager(), "123");
-
-//                Intent intent = new Intent(MainActivity.this, TestingActivity.class);
-//                startActivity(intent);
             }
         });
+
+        scheduleSync();
     }
 
     @Override
@@ -158,5 +172,25 @@ public class MainActivity extends AppCompatActivity {
         DialogError dialog = new DialogError();
         dialog.setErrorMessage(errorMessage);
         dialog.show(getFragmentManager(), "123");
+    }
+
+    private void scheduleSync() {
+        if (mAlarmManager != null) {
+            mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
+                    AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                    AlarmManager.INTERVAL_FIFTEEN_MINUTES, mSyncPendingIntent);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        mAlarmManager.cancel(mSyncPendingIntent);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scheduleSync();
     }
 }

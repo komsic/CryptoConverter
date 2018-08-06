@@ -21,7 +21,8 @@ public class CurrencyRemote {
     }
 
     public void fetchData() {
-        RestApiService apiService = new RestApiClient().getClient().create(RestApiService.class);
+        RestApiService apiService = RestApiClient.getClient().create(RestApiService.class);
+
         Call<ItemResponse> itemResponseCall = apiService.getItemResponse();
         itemResponseCall.enqueue(new Callback<ItemResponse>() {
             @Override
@@ -30,7 +31,6 @@ public class CurrencyRemote {
                 if (response.isSuccessful()) {
                     mItemResponse = response.body();
                     mDataLoaded.onDataLoadedSuccess(mItemResponse);
-                    Log.e(TAG, "onResponse: mItemResponse is " + (mItemResponse == null ? "null" : "not null"));
                 }
             }
 

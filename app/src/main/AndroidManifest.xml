@@ -42,7 +42,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.ui.MainActivity" />
         </activity>
-        <activity android:name=".view.ui.TestingActivity"></activity>
+        <activity android:name=".view.ui.TestingActivity" />
+
+        <service
+            android:name=".SyncCurrencyService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

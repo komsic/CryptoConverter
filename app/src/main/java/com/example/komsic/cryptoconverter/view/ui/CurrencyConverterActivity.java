@@ -27,6 +27,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
     private TextView mETHResultTxt;
 
     private String selectedCurrencyType;
+    private CurrencyDetailViewModel mViewModel;
     private CurrencyCard mCard;
 
     @Override
@@ -49,9 +50,9 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             selectedCurrencyType = bundle.getString("currencyName");
         }
 
-        CurrencyDetailViewModel viewModel = ViewModelProviders.of(this)
+        mViewModel = ViewModelProviders.of(this)
                 .get(CurrencyDetailViewModel.class);
-        viewModel.getCurrencyCard(selectedCurrencyType).observe(this,
+        mViewModel.getCurrencyCard(selectedCurrencyType).observe(this,
                 new Observer<CurrencyCard>() {
                     @Override
                     public void onChanged(@Nullable CurrencyCard card) {
@@ -66,18 +67,20 @@ public class CurrencyConverterActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, spinnerArray));
     }
 
-    // TODO Remember to set conversion_result_layout visible
-    public void convert(View view) throws Exception {
+    public void convert(View view) {
+
         String edtInput = mConvertEdt.getText().toString();
         try {
             double amountTobeConverted = Double.parseDouble(edtInput);
             if (amountTobeConverted > 0.0) {
                 String selectedCurrencyToBeConverted = (String) mConverterSpinner.getSelectedItem();
-                CurrencyConverter currencyConverter = new CurrencyConverter(mCard);
-                double[] convertedAmount =
-                        currencyConverter.convert((selectedCurrencyToBeConverted != null ?
-                                        selectedCurrencyToBeConverted : mCard.currencyType),
-                                amountTobeConverted);
+
+                double[] convertedAmount = mViewModel.getConvertedAmount(
+                        mCard,
+                        (selectedCurrencyToBeConverted != null ? selectedCurrencyToBeConverted :
+                                mCard.currencyType),
+                        amountTobeConverted
+                );
 
                 mResultLayout.setVisibility(View.VISIBLE);
                 mCurrentCurrencyResultTxt.setText(String

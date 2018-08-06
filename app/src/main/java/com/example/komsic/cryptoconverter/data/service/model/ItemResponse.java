@@ -17,18 +17,9 @@ public class ItemResponse {
     @Expose
     private CurrencyRate eTH;
 
-    public ItemResponse() {
-        bTC = new CurrencyRate();
-        eTH = new CurrencyRate();
-    }
-
     public ItemResponse(CurrencyRate bTC, CurrencyRate eTH) {
         this.bTC = bTC;
         this.eTH = eTH;
-    }
-
-    public CurrencyRate getBTC() {
-        return bTC;
     }
 
     public double getBTC(String currencyType) {
@@ -37,9 +28,5 @@ public class ItemResponse {
 
     public double getETH(String currencyType) {
         return eTH.getRate(currencyType);
-    }
-
-    public  CurrencyRate getETH() {
-        return eTH;
     }
 }

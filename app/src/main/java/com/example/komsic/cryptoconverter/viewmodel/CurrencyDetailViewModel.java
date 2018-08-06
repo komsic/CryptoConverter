@@ -14,8 +14,13 @@ public class CurrencyDetailViewModel extends AndroidViewModel {
 
     public CurrencyDetailViewModel(@NonNull Application application) {
         super(application);
-
         mRepository = CurrencyRepository.getInstance(application);
+    }
+
+    public double[] getConvertedAmount(CurrencyCard card, String selectedCurrencyToBeConverted,
+                                       double amountTobeConverted) {
+        return mRepository.getConvertedAmount(card, selectedCurrencyToBeConverted,
+                amountTobeConverted);
     }
 
     public LiveData<CurrencyCard> getCurrencyCard(String currencyType) {

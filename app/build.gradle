@@ -41,5 +41,8 @@ dependencies {
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
     implementation 'android.arch.lifecycle:livedata:1.1.1'
 
+    implementation 'com.google.dagger:dagger:2.16'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
+
     testImplementation 'junit:junit:4.12'
 }
