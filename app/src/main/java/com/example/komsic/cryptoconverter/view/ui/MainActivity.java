@@ -4,11 +4,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,35 +22,53 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.komsic.cryptoconverter.CurrencyApplication;
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.SyncCurrencyService;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
+import com.example.komsic.cryptoconverter.di.view.ViewComponent;
+import com.example.komsic.cryptoconverter.di.view.ViewModule;
 import com.example.komsic.cryptoconverter.view.adapter.CurrencyConversionAdapter;
 import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
+import com.example.komsic.cryptoconverter.viewmodel.ViewModelFactory;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private CurrencyConversionAdapter mAdapter;
     private TextView btcToEthRateTV;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 	private CurrencyListViewModel mViewModel;
-    private AlarmManager mAlarmManager;
     private PendingIntent mSyncPendingIntent;
+
+    @Inject
+    CurrencyConversionAdapter mAdapter;
+
+    @Inject
+    AlarmManager mAlarmManager;
+
+    @Inject
+    LinearLayoutManager manager;
+
+    @Inject
+    ViewModelFactory mViewModelFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getViewComponent().inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, SyncCurrencyService.class);
         mSyncPendingIntent = PendingIntent.getService(
                 this,
@@ -69,12 +87,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        mAdapter = new CurrencyConversionAdapter();
         recyclerView.setAdapter(mAdapter);
 
-        mViewModel = ViewModelProviders.of(this).get(CurrencyListViewModel.class);
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CurrencyListViewModel.class);
         mViewModel.getSelectedCurrencies().observe(this, new Observer<List<CurrencyCard>>() {
             @Override
             public void onChanged(@Nullable List<CurrencyCard> currencyCards) {
@@ -85,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -192,5 +210,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         scheduleSync();
+    }
+
+    @UiThread
+    protected ViewComponent getViewComponent() {
+        return ((CurrencyApplication) getApplication())
+                .getApplicationComponent()
+                .newViewComponent(new ViewModule(this));
     }
 }

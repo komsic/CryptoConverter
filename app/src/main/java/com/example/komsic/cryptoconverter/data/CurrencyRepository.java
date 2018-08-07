@@ -1,6 +1,5 @@
 package com.example.komsic.cryptoconverter.data;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
@@ -8,12 +7,15 @@ import android.os.AsyncTask;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardDao;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
-import com.example.komsic.cryptoconverter.data.db.CurrencyDb;
 import com.example.komsic.cryptoconverter.data.service.CurrencyRemote;
 import com.example.komsic.cryptoconverter.data.service.model.ItemResponse;
+import com.example.komsic.cryptoconverter.di.ApplicationScope;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+@ApplicationScope
 public class CurrencyRepository {
     private static final String TAG = "CurrencyRepository";
     private static CurrencyRepository sCurrencyRepository;
@@ -24,27 +26,27 @@ public class CurrencyRepository {
     private CurrencyRemote mRemote;
     private static MutableLiveData<Boolean> mRemoteDataFetchingStatus;
 
-    private CurrencyRepository(Application application) {
-        CurrencyDb db = CurrencyDb.getDatabase(application);
-        mDao = db.currencyDao();
+    CurrencyConverter currencyConverter;
+
+    @Inject
+    CurrencyRepository(CurrencyConverter currencyConverter, CurrencyCardDao dao) {
+        this.currencyConverter = currencyConverter;
+        mDao = dao;
         mSelectedCard = mDao.getSelectedCards();
         mUnselectedCard = mDao.getUnselectedCards();
         mRemote = new CurrencyRemote();
         new updateRatesFromRemoteAsyncTask(mDao, mRemote).execute();
         mRemoteDataFetchingStatus = new MutableLiveData<>();
+        sCurrencyRepository = this;
     }
 
-    public synchronized static CurrencyRepository getInstance(Application application) {
-        if (sCurrencyRepository == null) {
-            sCurrencyRepository = new CurrencyRepository(application);
-        }
-
+    public static CurrencyRepository getCurrencyRepository() {
         return sCurrencyRepository;
     }
 
     public double[] getConvertedAmount(CurrencyCard card, String selectedCurrencyToBeConverted,
                                        double amountTobeConverted) {
-        CurrencyConverter currencyConverter = new CurrencyConverter(card);
+        currencyConverter.setCard(card);
         return currencyConverter.convert(selectedCurrencyToBeConverted, amountTobeConverted);
     }
 
@@ -133,6 +135,7 @@ public class CurrencyRepository {
             mAsyncTaskDao = dao;
             mSelectedStatus = selectedStatus;
         }
+
         @Override
         protected Void doInBackground(String... currencyTypes) {
             String currencyType = currencyTypes[0];

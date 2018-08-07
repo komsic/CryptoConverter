@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -13,10 +15,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.komsic.cryptoconverter.CurrencyApplication;
 import com.example.komsic.cryptoconverter.R;
 import com.example.komsic.cryptoconverter.data.CurrencyConverter;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
+import com.example.komsic.cryptoconverter.di.view.ViewComponent;
+import com.example.komsic.cryptoconverter.di.view.ViewModule;
 import com.example.komsic.cryptoconverter.viewmodel.CurrencyDetailViewModel;
+import com.example.komsic.cryptoconverter.viewmodel.ViewModelFactory;
+
+import javax.inject.Inject;
 
 public class CurrencyConverterActivity extends AppCompatActivity {
     private Spinner mConverterSpinner;
@@ -30,8 +38,13 @@ public class CurrencyConverterActivity extends AppCompatActivity {
     private CurrencyDetailViewModel mViewModel;
     private CurrencyCard mCard;
 
+    @Inject
+    ViewModelFactory mViewModelFactory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getViewComponent().inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_converter);
 
@@ -50,7 +63,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             selectedCurrencyType = bundle.getString("currencyName");
         }
 
-        mViewModel = ViewModelProviders.of(this)
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory)
                 .get(CurrencyDetailViewModel.class);
         mViewModel.getCurrencyCard(selectedCurrencyType).observe(this,
                 new Observer<CurrencyCard>() {
@@ -65,6 +78,13 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         String[] spinnerArray = {selectedCurrencyType, getString(R.string.btc), getString(R.string.eth)};
         mConverterSpinner.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, spinnerArray));
+    }
+
+    @UiThread
+    protected ViewComponent getViewComponent() {
+        return ((CurrencyApplication) getApplication())
+                .getApplicationComponent()
+                .newViewComponent(new ViewModule(this));
     }
 
     public void convert(View view) {
@@ -94,7 +114,8 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             if (edtInput.isEmpty()) {
                 Toast.makeText(this, getString(R.string.empty_field), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, getString(R.string.valid_amount), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.valid_amount) + 4555555, Toast.LENGTH_SHORT).show();
+                Log.e("Act", "convert: " + e.getMessage());
             }
         }
     }

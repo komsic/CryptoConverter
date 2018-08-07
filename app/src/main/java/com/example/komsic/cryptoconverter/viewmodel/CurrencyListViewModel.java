@@ -1,10 +1,8 @@
 package com.example.komsic.cryptoconverter.viewmodel;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import android.arch.lifecycle.ViewModel;
 
 import com.example.komsic.cryptoconverter.data.CurrencyRepository;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
@@ -12,17 +10,15 @@ import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
 
 import java.util.List;
 
-public class CurrencyListViewModel extends AndroidViewModel {
+public class CurrencyListViewModel extends ViewModel {
     private static final String TAG = "CurrencyListViewModel";
 
     private CurrencyRepository mRepository;
     private LiveData<List<CurrencyCard>> mSelectedCurrencies;
     private LiveData<List<CurrencyCardSubset>> mUnselectedCurrencies;
 
-    public CurrencyListViewModel(@NonNull Application application) {
-        super(application);
-
-        mRepository = CurrencyRepository.getInstance(application);
+    public CurrencyListViewModel(CurrencyRepository repository) {
+        mRepository = repository;
         mSelectedCurrencies = mRepository.getSelectedCard();
         mUnselectedCurrencies = mRepository.getUnselectedCard();
     }

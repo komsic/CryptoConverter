@@ -14,6 +14,6 @@ public class SyncCurrencyService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        CurrencyRepository.getInstance(getApplication()).updateRates();
+        CurrencyRepository.getCurrencyRepository().updateRates();
     }
 }

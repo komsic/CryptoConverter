@@ -1,20 +1,17 @@
 package com.example.komsic.cryptoconverter.viewmodel;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
+import android.arch.lifecycle.ViewModel;
 
 import com.example.komsic.cryptoconverter.data.CurrencyRepository;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 
-public class CurrencyDetailViewModel extends AndroidViewModel {
+public class CurrencyDetailViewModel extends ViewModel {
 
-    private CurrencyRepository mRepository;
+    CurrencyRepository mRepository;
 
-    public CurrencyDetailViewModel(@NonNull Application application) {
-        super(application);
-        mRepository = CurrencyRepository.getInstance(application);
+    public CurrencyDetailViewModel(CurrencyRepository repository) {
+        mRepository = repository;
     }
 
     public double[] getConvertedAmount(CurrencyCard card, String selectedCurrencyToBeConverted,

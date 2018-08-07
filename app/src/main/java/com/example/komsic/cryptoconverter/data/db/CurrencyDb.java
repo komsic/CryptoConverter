@@ -1,13 +1,10 @@
 package com.example.komsic.cryptoconverter.data.db;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.komsic.cryptoconverter.R;
@@ -25,39 +22,15 @@ import java.io.InputStreamReader;
 public abstract class CurrencyDb extends RoomDatabase {
     private static final String TAG = "CurrencyDb";
 
-    private static CurrencyDb INSTANCE;
-    public static int i;
-
-    public static CurrencyDb getDatabase(final Context context) {
-
-        if (INSTANCE == null) {
-            synchronized (CurrencyDb.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            CurrencyDb.class, "currency_database")
-                            .addCallback(new RoomDatabase.Callback() {
-                                @Override
-                                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                    super.onCreate(db);
-                                    new PopulateDbAsync(INSTANCE, context).execute();
-                                }
-                            })
-                            .build();
-                }
-            }
-        }
-
-        return INSTANCE;
-    }
-
     public abstract CurrencyCardDao currencyDao();
 
-    private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
+
+    public static class PopulateDatabaseAsync extends AsyncTask<Void, Void, Void> {
 
         private final CurrencyCardDao mDao;
         private Resources mResources;
 
-        PopulateDbAsync(CurrencyDb db, Context context) {
+        public PopulateDatabaseAsync(CurrencyDb db, Context context) {
             mDao = db.currencyDao();
             mResources = context.getResources();
         }

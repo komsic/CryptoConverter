@@ -4,6 +4,8 @@ import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 
 import java.math.BigDecimal;
 
+import javax.inject.Inject;
+
 /**
  * Created by komsic on 11/4/2017.
  */
@@ -15,7 +17,11 @@ public class CurrencyConverter {
 
     private CurrencyCard mCard;
 
-    public CurrencyConverter(CurrencyCard card) {
+    @Inject
+    public CurrencyConverter() {
+    }
+
+    public void setCard(CurrencyCard card) {
         mCard = card;
     }
 
