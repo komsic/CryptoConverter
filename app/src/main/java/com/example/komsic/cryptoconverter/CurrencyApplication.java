@@ -3,10 +3,10 @@ package com.example.komsic.cryptoconverter;
 import android.app.Application;
 
 import com.example.komsic.cryptoconverter.data.CurrencyRepository;
-import com.example.komsic.cryptoconverter.di.components.ApplicationComponent;
-import com.example.komsic.cryptoconverter.di.components.DaggerApplicationComponent;
-import com.example.komsic.cryptoconverter.di.modules.ApplicationModule;
-import com.example.komsic.cryptoconverter.di.modules.RoomModule;
+import com.example.komsic.cryptoconverter.di.application.ApplicationComponent;
+import com.example.komsic.cryptoconverter.di.application.ApplicationModule;
+import com.example.komsic.cryptoconverter.di.application.DaggerApplicationComponent;
+import com.example.komsic.cryptoconverter.di.application.RoomModule;
 
 import javax.inject.Inject;
 

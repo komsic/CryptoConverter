@@ -6,6 +6,8 @@ import android.util.Log;
 import com.example.komsic.cryptoconverter.data.service.model.CurrencyRate;
 import com.example.komsic.cryptoconverter.data.service.model.ItemResponse;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,17 +15,23 @@ import retrofit2.Response;
 public class CurrencyRemote {
     private static final String TAG = "CurrencyRemote";
 
+    private RestApiService mApiService;
     private ItemResponse mItemResponse;
     private OnDataLoaded mDataLoaded;
+
+    @Inject
+    public CurrencyRemote(RestApiService restApiService) {
+        mApiService = restApiService;
+    }
 
     public void setDataLoaded(OnDataLoaded dataLoaded) {
         mDataLoaded = dataLoaded;
     }
 
     public void fetchData() {
-        RestApiService apiService = RestApiClient.getClient().create(RestApiService.class);
+//        RestApiService mApiService = RestApiClient.getClient().create(RestApiService.class);
 
-        Call<ItemResponse> itemResponseCall = apiService.getItemResponse();
+        Call<ItemResponse> itemResponseCall = mApiService.getItemResponse();
         itemResponseCall.enqueue(new Callback<ItemResponse>() {
             @Override
             public void onResponse(@NonNull Call<ItemResponse> call,

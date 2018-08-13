@@ -1,4 +1,4 @@
-package com.example.komsic.cryptoconverter.di.modules;
+package com.example.komsic.cryptoconverter.di.application;
 
 import android.app.Application;
 import android.arch.persistence.db.SupportSQLiteDatabase;

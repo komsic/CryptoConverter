@@ -18,7 +18,6 @@ import javax.inject.Inject;
 @ApplicationScope
 public class CurrencyRepository {
     private static final String TAG = "CurrencyRepository";
-    private static CurrencyRepository sCurrencyRepository;
 
     private CurrencyCardDao mDao;
     private LiveData<List<CurrencyCard>> mSelectedCard;
@@ -29,19 +28,15 @@ public class CurrencyRepository {
     CurrencyConverter currencyConverter;
 
     @Inject
-    CurrencyRepository(CurrencyConverter currencyConverter, CurrencyCardDao dao) {
+    CurrencyRepository(CurrencyConverter currencyConverter, CurrencyCardDao dao,
+                       CurrencyRemote currencyRemote) {
         this.currencyConverter = currencyConverter;
         mDao = dao;
         mSelectedCard = mDao.getSelectedCards();
         mUnselectedCard = mDao.getUnselectedCards();
-        mRemote = new CurrencyRemote();
+        mRemote = currencyRemote;
         new updateRatesFromRemoteAsyncTask(mDao, mRemote).execute();
         mRemoteDataFetchingStatus = new MutableLiveData<>();
-        sCurrencyRepository = this;
-    }
-
-    public static CurrencyRepository getCurrencyRepository() {
-        return sCurrencyRepository;
     }
 
     public double[] getConvertedAmount(CurrencyCard card, String selectedCurrencyToBeConverted,

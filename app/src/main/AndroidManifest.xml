@@ -45,9 +45,7 @@
         </activity>
         <activity android:name=".view.ui.TestingActivity" />
 
-        <service
-            android:name=".SyncCurrencyService"
-            android:exported="false"></service>
+        <service android:name=".service.SyncCurrencyService" />
     </application>
 
 </manifest>

@@ -24,11 +24,11 @@ import android.widget.TextView;
 
 import com.example.komsic.cryptoconverter.CurrencyApplication;
 import com.example.komsic.cryptoconverter.R;
-import com.example.komsic.cryptoconverter.SyncCurrencyService;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCardSubset;
 import com.example.komsic.cryptoconverter.di.view.ViewComponent;
 import com.example.komsic.cryptoconverter.di.view.ViewModule;
+import com.example.komsic.cryptoconverter.service.SyncCurrencyService;
 import com.example.komsic.cryptoconverter.view.adapter.CurrencyConversionAdapter;
 import com.example.komsic.cryptoconverter.viewmodel.CurrencyListViewModel;
 import com.example.komsic.cryptoconverter.viewmodel.ViewModelFactory;
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @UiThread
-    protected ViewComponent getViewComponent() {
+    private ViewComponent getViewComponent() {
         return ((CurrencyApplication) getApplication())
                 .getApplicationComponent()
                 .newViewComponent(new ViewModule(this));
