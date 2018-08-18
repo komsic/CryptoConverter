@@ -43,7 +43,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.ui.MainActivity" />
         </activity>
-        <activity android:name=".view.ui.TestingActivity" />
 
         <service android:name=".service.SyncCurrencyService" />
     </application>
