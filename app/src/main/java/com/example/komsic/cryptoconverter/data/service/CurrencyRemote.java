@@ -1,6 +1,6 @@
 package com.example.komsic.cryptoconverter.data.service;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.komsic.cryptoconverter.data.service.model.CurrencyRate;

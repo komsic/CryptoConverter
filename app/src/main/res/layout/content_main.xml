@@ -9,22 +9,22 @@
     tools:context="com.example.komsic.cryptoconverter.view.ui.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/crypto_exchange_rate_layout">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
             tools:listitem="@layout/list_item_layout" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-    <android.support.design.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/crypto_exchange_rate_layout"
         android:layout_below="@+id/loading_view"
         android:layout_centerHorizontal="true"
@@ -111,5 +111,5 @@
 
         </LinearLayout>
 
-    </android.support.design.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

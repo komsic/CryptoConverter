@@ -2,8 +2,8 @@ package com.example.komsic.cryptoconverter.di.view;
 
 import android.app.AlarmManager;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.komsic.cryptoconverter.view.adapter.CurrencyConversionAdapter;
 
