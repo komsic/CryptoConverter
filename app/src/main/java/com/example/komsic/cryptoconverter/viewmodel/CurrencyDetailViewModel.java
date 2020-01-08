@@ -1,7 +1,7 @@
 package com.example.komsic.cryptoconverter.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.komsic.cryptoconverter.data.CurrencyRepository;
 import com.example.komsic.cryptoconverter.data.db.CurrencyCard;

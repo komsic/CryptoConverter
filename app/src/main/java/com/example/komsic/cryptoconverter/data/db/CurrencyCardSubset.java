@@ -1,6 +1,6 @@
 package com.example.komsic.cryptoconverter.data.db;
 
-import android.arch.persistence.room.ColumnInfo;
+import androidx.room.ColumnInfo;
 
 // A POJO used to return a subset of CurrencyCard
 public class CurrencyCardSubset {
